@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-import '../config/const.dart';
+import '../config/open_api_key/get_api_key.dart';
 import 'model.dart';
 
 class AiModelAPI {
@@ -17,7 +17,7 @@ class AiModelAPI {
     final response = await client.get(Uri.parse('$host$_path'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $OPENAI_API_KEY'
+      'Authorization': 'Bearer ${GetIt.instance.get<GetAPIKey>().call()}'
     });
     if (response.statusCode == 200) {
       final List<dynamic> body = jsonDecode(response.body)['data'];

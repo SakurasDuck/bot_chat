@@ -1,117 +1,102 @@
-import 'package:chat_ui/src/provider/get_models.dart';
+import 'package:chat_ui/src/provider/model_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class ModelsList extends StatefulWidget {
+import '../widgets/refresh.dart';
+
+class ModelsList extends StatelessWidget {
   const ModelsList({super.key});
 
   @override
-  State<ModelsList> createState() => _ModelsListState();
-}
-
-class _ModelsListState extends State<ModelsList> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF075E54),
-        title: const Text(
-          'ChatGPT chat',
-          style: TextStyle(fontSize: 26),
+    return Consumer(builder: (builder, ref, child) {
+      final modelListEffect = ref.watch(modelListEffectProvider);
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF075E54),
+          title: const Text(
+            'ChatGPT Models',
+            style: TextStyle(fontSize: 26),
+          ),
         ),
-        actions: [
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.search,
-                  size: 26.0,
-                ),
-              )),
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
-                child: const Icon(
-                  Icons.more_vert_outlined,
-                  size: 26.0,
-                ),
-              )),
-        ],
-      ),
-      body: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Consumer(builder: (context, ref, child) {
-            final futureModels = ref.read(getModelsProvider.future);
-            return FutureBuilder(
-                future: futureModels,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(child: Text('Error'));
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasData) {
-                    final models = snapshot.data;
-                    return ListView.builder(
-                      itemCount: models?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final model = models![index];
-                        return Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         const Message_screeen(),
-                                //   ),
-                                // );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: ListTile(
-                                  title: Text(
-                                    model.id,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  subtitle: Padding(
-                                    padding: const EdgeInsets.only(top: 6.0),
-                                    child: Text(
-                                      model.owned_by,
-                                      style: const TextStyle(fontSize: 15),
-                                    ),
-                                  ),
-                                  trailing: Text(
-                                    model.object,
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 13,
-                                    ),
-                                  ),
+        body: Consumer(builder: (context, ref, child) {
+          final modelListState = ref.watch(modelListStateProvider);
+          return Refresh(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  final model = modelListState[index];
+                  final checked = modelListEffect == model.id;
+                  return Container(
+                    margin: const EdgeInsets.all(2),
+                    decoration: checked
+                        ? BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 2,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          )
+                        : null,
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            ref
+                                .read(modelListEffectProvider.notifier)
+                                .onChange(model.id);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: ListTile(
+                              title: Text(
+                                model.id,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(top: 6.0),
+                                child: Text(
+                                  model.owned_by,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ),
+                              trailing: Text(
+                                model.object,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13,
                                 ),
                               ),
                             ),
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    return const Center(child: Text('No data'));
-                  }
-                });
-          })),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color(0xFF075E54),
-        child: const Icon(
-          Icons.comment,
-          color: Colors.white,
-        ),
-      ),
-    );
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                itemCount: modelListState.length,
+              ),
+              refreshFunc: () async =>
+                  ref.read(modelListStateProvider.notifier).onRefresh());
+        }),
+        floatingActionButton: ref.watch(modelCanSaveProvider)
+            ? FloatingActionButton(
+                onPressed: () {
+                  ref.read(modelListEffectProvider.notifier).onSave();
+                  context.pop();
+                },
+                backgroundColor: const Color(0xFF075E54),
+                child: const Icon(
+                  Icons.done,
+                  size: 26,
+                  color: Colors.white,
+                ),
+              )
+            : null,
+      );
+    });
   }
 }

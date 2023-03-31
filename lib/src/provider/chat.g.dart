@@ -6,7 +6,7 @@ part of 'chat.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getChatHash() => r'5cab9138e5ef1e749504ac4ffbd6573dc76f54cf';
+String _$getChatHash() => r'f92da0e6a8f26b51ae98b51cd825a8d66e1e5c34';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,14 +42,10 @@ class GetChatFamily extends Family<AsyncValue<ChatResponse>> {
 
   /// See also [getChat].
   GetChatProvider call(
-    String model,
-    String content, {
-    Role role = Role.user,
-  }) {
+    List<ReqMessage> reqMessage,
+  ) {
     return GetChatProvider(
-      model,
-      content,
-      role: role,
+      reqMessage,
     );
   }
 
@@ -58,9 +54,7 @@ class GetChatFamily extends Family<AsyncValue<ChatResponse>> {
     covariant GetChatProvider provider,
   ) {
     return call(
-      provider.model,
-      provider.content,
-      role: provider.role,
+      provider.reqMessage,
     );
   }
 
@@ -83,15 +77,11 @@ class GetChatFamily extends Family<AsyncValue<ChatResponse>> {
 class GetChatProvider extends AutoDisposeFutureProvider<ChatResponse> {
   /// See also [getChat].
   GetChatProvider(
-    this.model,
-    this.content, {
-    this.role = Role.user,
-  }) : super.internal(
+    this.reqMessage,
+  ) : super.internal(
           (ref) => getChat(
             ref,
-            model,
-            content,
-            role: role,
+            reqMessage,
           ),
           from: getChatProvider,
           name: r'getChatProvider',
@@ -103,24 +93,17 @@ class GetChatProvider extends AutoDisposeFutureProvider<ChatResponse> {
           allTransitiveDependencies: GetChatFamily._allTransitiveDependencies,
         );
 
-  final String model;
-  final String content;
-  final Role role;
+  final List<ReqMessage> reqMessage;
 
   @override
   bool operator ==(Object other) {
-    return other is GetChatProvider &&
-        other.model == model &&
-        other.content == content &&
-        other.role == role;
+    return other is GetChatProvider && other.reqMessage == reqMessage;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, model.hashCode);
-    hash = _SystemHash.combine(hash, content.hashCode);
-    hash = _SystemHash.combine(hash, role.hashCode);
+    hash = _SystemHash.combine(hash, reqMessage.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -156,7 +139,7 @@ final getControllerProvider =
 );
 
 typedef GetControllerRef = AutoDisposeProviderRef<TextEditingController>;
-String _$chatStoreHash() => r'117cf5a1e6876f4f0329eb14413da10056fd92e7';
+String _$chatStoreHash() => r'3874895007b3aa5315adbd0b3bbc30495d81bafc';
 
 /// See also [ChatStore].
 @ProviderFor(ChatStore)
@@ -166,10 +149,15 @@ final chatStoreProvider =
   name: r'chatStoreProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$chatStoreHash,
-  dependencies: <ProviderOrFamily>[getChatProvider, getUuidProvider],
+  dependencies: <ProviderOrFamily>[
+    getChatProvider,
+    getUuidProvider,
+    chatModelProvider
+  ],
   allTransitiveDependencies: <ProviderOrFamily>[
     getChatProvider,
-    getUuidProvider
+    getUuidProvider,
+    chatModelProvider
   ],
 );
 
