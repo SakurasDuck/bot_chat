@@ -139,7 +139,21 @@ final getControllerProvider =
 );
 
 typedef GetControllerRef = AutoDisposeProviderRef<TextEditingController>;
-String _$chatStoreHash() => r'3874895007b3aa5315adbd0b3bbc30495d81bafc';
+String _$getFocusNodeHash() => r'1b49fe22eb29bcafd61898e5bd6587d9eb6b5b0c';
+
+/// See also [getFocusNode].
+@ProviderFor(getFocusNode)
+final getFocusNodeProvider = AutoDisposeProvider<TextInputFocusNode>.internal(
+  getFocusNode,
+  name: r'getFocusNodeProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$getFocusNodeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GetFocusNodeRef = AutoDisposeProviderRef<TextInputFocusNode>;
+String _$chatStoreHash() => r'7256b14df3f25eca1e75f1fab5d91db4e901e16e';
 
 /// See also [ChatStore].
 @ProviderFor(ChatStore)

@@ -6,12 +6,14 @@ class SendMessageCard extends StatelessWidget {
   final String message;
   final String date;
   final SendMessageStatus sendStatus;
+
+  final Function resendMessageFunc;
   const SendMessageCard(
-      {Key? key,
+      {super.key,
+      required this.resendMessageFunc,
       required this.sendStatus,
       required this.message,
-      required this.date})
-      : super(key: key);
+      required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -28,85 +30,85 @@ class SendMessageCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: IntrinsicWidth(
             child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 15,
-                  right: 30,
-                  top: 5,
-                ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 30,
+                    top: 5,
                   ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(
-                  bottom: 5,
-                  right: 10,
-                  left: 10,
-                ),
-                child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    date,
+                  child: Text(
+                    message,
                     style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.grey,
+                      fontSize: 16,
                     ),
                   ),
-                  const SizedBox(
-                    width: 5,
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(
+                    bottom: 5,
+                    right: 10,
+                    left: 10,
                   ),
-                  AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: 20,
-                      width: 20,
-                      child: Builder(builder: (context) {
-                        if (sendStatus == SendMessageStatus.SENT) {
-                          return const Icon(
-                            Icons.done,
-                            size: 20,
-                            color: Colors.blueAccent,
-                          );
-                        } else if (sendStatus == SendMessageStatus.SENDING) {
-                          return const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                            ),
-                          );
-                        } else if (sendStatus == SendMessageStatus.ERROR) {
-                          return GestureDetector(
-                            onTap: () {
-                              //todo resend message
-                            },
-                            child: const Icon(
-                              Icons.refresh,
-                              size: 20,
-                              color: Colors.red,
-                            ),
-                          );
-                        }
-                        return const Icon(
-                          Icons.sync,
-                          size: 20,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        date,
+                        style: const TextStyle(
+                          fontSize: 13,
                           color: Colors.grey,
-                        );
-                      }),
-                    )
-                ],
-              ),
-              ),
-            ],
-          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        height: 20,
+                        width: 20,
+                        child: Builder(builder: (context) {
+                          if (sendStatus == SendMessageStatus.SENT) {
+                            return const Icon(
+                              Icons.done,
+                              size: 20,
+                              color: Colors.blueAccent,
+                            );
+                          } else if (sendStatus == SendMessageStatus.SENDING) {
+                            return const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
+                            );
+                          } else if (sendStatus == SendMessageStatus.ERROR) {
+                            return GestureDetector(
+                              onTap: () {
+                                resendMessageFunc.call();
+                              },
+                              child: const Icon(
+                                Icons.refresh,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                            );
+                          }
+                          return const Icon(
+                            Icons.sync,
+                            size: 20,
+                            color: Colors.grey,
+                          );
+                        }),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

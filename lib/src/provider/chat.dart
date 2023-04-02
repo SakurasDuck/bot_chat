@@ -1,3 +1,4 @@
+import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,6 +9,7 @@ import '../services/chat_api.dart';
 import '../services/chat_state.dart';
 import '../services/message.dart';
 import 'chat_config.dart';
+import 'scroll_ctrl.dart';
 
 part 'chat.g.dart';
 
@@ -48,21 +50,30 @@ class ChatStore extends _$ChatStore {
     //添加到消息列表,并刷新 UI
     modify((state) => state..add(userMsg));
 
-    // debugPrint(model);
-    // debugPrint(role.toString());
+    Future.delayed(const Duration(seconds: 2)).then((value) {
+      modify((state) {
+        final index =
+            state.indexWhere((element) => element.fromMe?.id == msgId);
+        state[index] = state[index].copyWith(
+            fromMe:
+                state[index].fromMe!.copyWith(status: SendMessageStatus.SENT));
+        return state;
+      });
+    });
+    return;
 
-    // Future.delayed(const Duration(seconds: 2)).then((value) {
-    //   modify((state) {
-    //     final index =
-    //         state.indexWhere((element) => element.fromMe?.id == msgId);
-    //     state[index] = state[index].copyWith(
-    //         fromMe:
-    //             state[index].fromMe!.copyWith(status: SendMessageStatus.SENT));
-    //     return state;
-    //   });
-    // });
-    // return;
+    //发送请求
+    return _request(msgId);
+  }
 
+  ///重新发送消息
+  Future<void> resendMEssage(String msgId) async {
+    //发送请求
+    return _request(msgId);
+  }
+
+  ///调用请求发送消息
+  Future<void> _request(String msgId) async {
     //发送消息
     SendMessageStatus requestStatus = SendMessageStatus.ERROR;
     final response =
@@ -122,3 +133,15 @@ Uuid getUuid(GetUuidRef ref) => const Uuid();
 @riverpod
 TextEditingController getController(GetControllerRef ref) =>
     TextEditingController();
+
+@riverpod
+TextInputFocusNode getFocusNode(GetFocusNodeRef ref) {
+  final foucsNode = TextInputFocusNode();
+  //监听焦点,获取焦点时,滚动到底部
+  foucsNode.addListener(() {
+    if (foucsNode.hasFocus) {
+      ref.read(getScrollControllerProvider).jumpTo(0);
+    }
+  });
+  return foucsNode;
+}

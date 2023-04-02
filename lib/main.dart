@@ -1,9 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-
 import 'src/config/open_api_key/get_api_key.dart';
 import 'src/http_clinet/clinet.dart';
 import 'src/routes/route.dart';

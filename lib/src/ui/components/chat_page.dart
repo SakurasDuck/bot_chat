@@ -60,6 +60,7 @@ class ChatView extends StatelessWidget {
                 builder: (context, ref, child) {
                   final controller = ref.read(getControllerProvider);
                   return ExtendedTextField(
+                    focusNode: TextInputFocusNode(),
                     expands: false,
                     maxLines: 4,
                     minLines: 1,
