@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../../provider/chat_config.dart';
+import '../../provider/portrait_list.dart';
 
 class PortraitItem extends StatelessWidget {
   const PortraitItem({required this.index,required this.msg, super.key});
 
   final int index;
 
-  final SystemMsg msg;
+  final Portrait msg;
 
   @override
   Widget build(BuildContext context) {

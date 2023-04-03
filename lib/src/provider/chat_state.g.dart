@@ -153,7 +153,7 @@ final getUuidProvider = Provider<Uuid>.internal(
 );
 
 typedef GetUuidRef = ProviderRef<Uuid>;
-String _$chatStoreHash() => r'7c222f03137163a4fd81d07a3323acf1538b16aa';
+String _$chatStoreHash() => r'32f1f99481a6dfb8a13825906d02a156563d1d78';
 
 /// See also [ChatStore].
 @ProviderFor(ChatStore)
@@ -213,7 +213,7 @@ final getFocusNodeProvider =
 
 typedef _$GetFocusNode = AutoDisposeNotifier<TextInputFocusNode>;
 String _$getScrollerControllerHash() =>
-    r'ed2a4f60e4009774276b784ec63a61289744587f';
+    r'd47593cf8c2b69619918f39d8243a8d526879c70';
 
 ///滚动控制器
 ///

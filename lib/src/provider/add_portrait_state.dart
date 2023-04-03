@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'add_portrait_state.g.dart';
 
 @riverpod
-class PortraitMsg extends _$PortraitMsg {
+class GetPortraitMsg extends _$GetPortraitMsg {
   @override
   List<String> build() => [];
 
@@ -14,16 +14,41 @@ class PortraitMsg extends _$PortraitMsg {
   }
 
   void addMsg() {
-    state = state..add(ref.read(addMsgControllerProvider).text);
+    final ctrl = ref.read(getEditMsgControllerProvider);
+    state = state..add(ctrl.text);
+    
+    ref.read(getShowEditMsgInputProvider.notifier).onChange();
+    ctrl.text = '';
+    
   }
 }
 
 @riverpod
-TextEditingController portraitNameController(PortraitNameControllerRef ref) {
-  return TextEditingController();
+class GetPortraitNameController extends _$GetPortraitNameController {
+  @override
+  TextEditingController build() => TextEditingController();
 }
 
 @riverpod
-TextEditingController addMsgController(AddMsgControllerRef ref) {
-  return TextEditingController();
+class GetEditMsgController extends _$GetEditMsgController {
+  @override
+  TextEditingController build() => TextEditingController();
 }
+
+@riverpod
+class GetShowEditMsgInput extends _$GetShowEditMsgInput {
+  @override
+  bool build() => false;
+
+  void onChange() {
+    state = !state;
+  }
+}
+
+
+@riverpod
+class  GetEditMsgFocusNode extends _$GetEditMsgFocusNode{
+  @override
+  FocusNode build() => FocusNode();
+}
+  

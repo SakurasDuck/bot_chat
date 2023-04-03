@@ -6,53 +6,89 @@ part of 'add_portrait_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$portraitNameControllerHash() =>
-    r'e9cbe5e9a148e7cda1084a538403146711c5b3fe';
+String _$getPortraitMsgHash() => r'51a0ebd56fe3b668eaddb78a520d0fd14c914f25';
 
-/// See also [portraitNameController].
-@ProviderFor(portraitNameController)
-final portraitNameControllerProvider =
-    AutoDisposeProvider<TextEditingController>.internal(
-  portraitNameController,
-  name: r'portraitNameControllerProvider',
+/// See also [GetPortraitMsg].
+@ProviderFor(GetPortraitMsg)
+final getPortraitMsgProvider =
+    AutoDisposeNotifierProvider<GetPortraitMsg, List<String>>.internal(
+  GetPortraitMsg.new,
+  name: r'getPortraitMsgProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$portraitNameControllerHash,
+      : _$getPortraitMsgHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef PortraitNameControllerRef
-    = AutoDisposeProviderRef<TextEditingController>;
-String _$addMsgControllerHash() => r'305b67cb890e6d39658e54aad7b14031788b00fd';
+typedef _$GetPortraitMsg = AutoDisposeNotifier<List<String>>;
+String _$getPortraitNameControllerHash() =>
+    r'97028b4c5e8470eaf172dc6386275185b257355d';
 
-/// See also [addMsgController].
-@ProviderFor(addMsgController)
-final addMsgControllerProvider =
-    AutoDisposeProvider<TextEditingController>.internal(
-  addMsgController,
-  name: r'addMsgControllerProvider',
+/// See also [GetPortraitNameController].
+@ProviderFor(GetPortraitNameController)
+final getPortraitNameControllerProvider = AutoDisposeNotifierProvider<
+    GetPortraitNameController, TextEditingController>.internal(
+  GetPortraitNameController.new,
+  name: r'getPortraitNameControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$addMsgControllerHash,
+      : _$getPortraitNameControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef AddMsgControllerRef = AutoDisposeProviderRef<TextEditingController>;
-String _$portraitMsgHash() => r'135311821d182cae53a64bae4725a598ae3a7f2f';
+typedef _$GetPortraitNameController
+    = AutoDisposeNotifier<TextEditingController>;
+String _$getEditMsgControllerHash() =>
+    r'8c08490d9acaddcea41496fb20b10b5974450325';
 
-/// See also [PortraitMsg].
-@ProviderFor(PortraitMsg)
-final portraitMsgProvider =
-    AutoDisposeNotifierProvider<PortraitMsg, List<String>>.internal(
-  PortraitMsg.new,
-  name: r'portraitMsgProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$portraitMsgHash,
+/// See also [GetEditMsgController].
+@ProviderFor(GetEditMsgController)
+final getEditMsgControllerProvider = AutoDisposeNotifierProvider<
+    GetEditMsgController, TextEditingController>.internal(
+  GetEditMsgController.new,
+  name: r'getEditMsgControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getEditMsgControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$PortraitMsg = AutoDisposeNotifier<List<String>>;
+typedef _$GetEditMsgController = AutoDisposeNotifier<TextEditingController>;
+String _$getShowEditMsgInputHash() =>
+    r'2a77a384bf2e94a186e63b6641ba0e773a03d0ce';
+
+/// See also [GetShowEditMsgInput].
+@ProviderFor(GetShowEditMsgInput)
+final getShowEditMsgInputProvider =
+    AutoDisposeNotifierProvider<GetShowEditMsgInput, bool>.internal(
+  GetShowEditMsgInput.new,
+  name: r'getShowEditMsgInputProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getShowEditMsgInputHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$GetShowEditMsgInput = AutoDisposeNotifier<bool>;
+String _$getEditMsgFocusNodeHash() =>
+    r'e1a949bc480c1566d82a92c3af35fdb6d9afc0ec';
+
+/// See also [GetEditMsgFocusNode].
+@ProviderFor(GetEditMsgFocusNode)
+final getEditMsgFocusNodeProvider =
+    AutoDisposeNotifierProvider<GetEditMsgFocusNode, FocusNode>.internal(
+  GetEditMsgFocusNode.new,
+  name: r'getEditMsgFocusNodeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getEditMsgFocusNodeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$GetEditMsgFocusNode = AutoDisposeNotifier<FocusNode>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

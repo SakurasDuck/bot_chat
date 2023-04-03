@@ -1,7 +1,7 @@
-import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../provider/portrait_list.dart';
 import '../widgets/portrait_msgs.dart';
 
 class ChatPortraits extends StatelessWidget {
