@@ -24,6 +24,7 @@ dependencies:
   async: ^2.10.0
   flutter_slidable: ^2.0.0
   darq: ^1.2.1
+  extended_list: ^3.0.0
   
 
 dev_dependencies:

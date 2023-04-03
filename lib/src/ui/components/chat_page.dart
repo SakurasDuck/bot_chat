@@ -1,10 +1,10 @@
-import 'package:chat_ui/src/provider/chat.dart';
 import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../provider/chat_state.dart';
 import 'chat_list.dart';
 
 class ChatView extends StatelessWidget {
@@ -58,9 +58,9 @@ class ChatView extends StatelessWidget {
                   left: 10.0, right: 10, top: 10, bottom: 5),
               child: Consumer(
                 builder: (context, ref, child) {
-                  final controller = ref.read(getControllerProvider);
+                  final controller = ref.watch(getTextEditControllerProvider);
                   return ExtendedTextField(
-                    focusNode: TextInputFocusNode(),
+                    focusNode: ref.watch(getFocusNodeProvider),
                     expands: false,
                     maxLines: 4,
                     minLines: 1,

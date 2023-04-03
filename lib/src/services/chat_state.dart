@@ -7,6 +7,7 @@ part 'chat_state.g.dart';
 @freezed
 class ChatState with _$ChatState {
   const factory ChatState({
+    required String msgId,
     required int createTimeStamp,
     SendMessage? fromMe,
     ChatResponse? fromBot,
@@ -19,7 +20,6 @@ class ChatState with _$ChatState {
 @freezed
 class SendMessage with _$SendMessage {
   const factory SendMessage({
-    required String id,
     required ReqMessage message,
     required SendMessageStatus status,
   }) = _SendMessage;

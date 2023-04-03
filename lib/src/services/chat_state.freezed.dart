@@ -20,6 +20,7 @@ ChatState _$ChatStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChatState {
+  String get msgId => throw _privateConstructorUsedError;
   int get createTimeStamp => throw _privateConstructorUsedError;
   SendMessage? get fromMe => throw _privateConstructorUsedError;
   ChatResponse? get fromBot => throw _privateConstructorUsedError;
@@ -35,7 +36,11 @@ abstract class $ChatStateCopyWith<$Res> {
   factory $ChatStateCopyWith(ChatState value, $Res Function(ChatState) then) =
       _$ChatStateCopyWithImpl<$Res, ChatState>;
   @useResult
-  $Res call({int createTimeStamp, SendMessage? fromMe, ChatResponse? fromBot});
+  $Res call(
+      {String msgId,
+      int createTimeStamp,
+      SendMessage? fromMe,
+      ChatResponse? fromBot});
 
   $SendMessageCopyWith<$Res>? get fromMe;
   $ChatResponseCopyWith<$Res>? get fromBot;
@@ -54,11 +59,16 @@ class _$ChatStateCopyWithImpl<$Res, $Val extends ChatState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? msgId = null,
     Object? createTimeStamp = null,
     Object? fromMe = freezed,
     Object? fromBot = freezed,
   }) {
     return _then(_value.copyWith(
+      msgId: null == msgId
+          ? _value.msgId
+          : msgId // ignore: cast_nullable_to_non_nullable
+              as String,
       createTimeStamp: null == createTimeStamp
           ? _value.createTimeStamp
           : createTimeStamp // ignore: cast_nullable_to_non_nullable
@@ -106,7 +116,11 @@ abstract class _$$_ChatStateCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
       __$$_ChatStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int createTimeStamp, SendMessage? fromMe, ChatResponse? fromBot});
+  $Res call(
+      {String msgId,
+      int createTimeStamp,
+      SendMessage? fromMe,
+      ChatResponse? fromBot});
 
   @override
   $SendMessageCopyWith<$Res>? get fromMe;
@@ -125,11 +139,16 @@ class __$$_ChatStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? msgId = null,
     Object? createTimeStamp = null,
     Object? fromMe = freezed,
     Object? fromBot = freezed,
   }) {
     return _then(_$_ChatState(
+      msgId: null == msgId
+          ? _value.msgId
+          : msgId // ignore: cast_nullable_to_non_nullable
+              as String,
       createTimeStamp: null == createTimeStamp
           ? _value.createTimeStamp
           : createTimeStamp // ignore: cast_nullable_to_non_nullable
@@ -150,11 +169,16 @@ class __$$_ChatStateCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ChatState implements _ChatState {
   const _$_ChatState(
-      {required this.createTimeStamp, this.fromMe, this.fromBot});
+      {required this.msgId,
+      required this.createTimeStamp,
+      this.fromMe,
+      this.fromBot});
 
   factory _$_ChatState.fromJson(Map<String, dynamic> json) =>
       _$$_ChatStateFromJson(json);
 
+  @override
+  final String msgId;
   @override
   final int createTimeStamp;
   @override
@@ -164,7 +188,7 @@ class _$_ChatState implements _ChatState {
 
   @override
   String toString() {
-    return 'ChatState(createTimeStamp: $createTimeStamp, fromMe: $fromMe, fromBot: $fromBot)';
+    return 'ChatState(msgId: $msgId, createTimeStamp: $createTimeStamp, fromMe: $fromMe, fromBot: $fromBot)';
   }
 
   @override
@@ -172,6 +196,7 @@ class _$_ChatState implements _ChatState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ChatState &&
+            (identical(other.msgId, msgId) || other.msgId == msgId) &&
             (identical(other.createTimeStamp, createTimeStamp) ||
                 other.createTimeStamp == createTimeStamp) &&
             (identical(other.fromMe, fromMe) || other.fromMe == fromMe) &&
@@ -181,7 +206,7 @@ class _$_ChatState implements _ChatState {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, createTimeStamp, fromMe, fromBot);
+      Object.hash(runtimeType, msgId, createTimeStamp, fromMe, fromBot);
 
   @JsonKey(ignore: true)
   @override
@@ -199,13 +224,16 @@ class _$_ChatState implements _ChatState {
 
 abstract class _ChatState implements ChatState {
   const factory _ChatState(
-      {required final int createTimeStamp,
+      {required final String msgId,
+      required final int createTimeStamp,
       final SendMessage? fromMe,
       final ChatResponse? fromBot}) = _$_ChatState;
 
   factory _ChatState.fromJson(Map<String, dynamic> json) =
       _$_ChatState.fromJson;
 
+  @override
+  String get msgId;
   @override
   int get createTimeStamp;
   @override
@@ -224,7 +252,6 @@ SendMessage _$SendMessageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SendMessage {
-  String get id => throw _privateConstructorUsedError;
   ReqMessage get message => throw _privateConstructorUsedError;
   SendMessageStatus get status => throw _privateConstructorUsedError;
 
@@ -240,7 +267,7 @@ abstract class $SendMessageCopyWith<$Res> {
           SendMessage value, $Res Function(SendMessage) then) =
       _$SendMessageCopyWithImpl<$Res, SendMessage>;
   @useResult
-  $Res call({String id, ReqMessage message, SendMessageStatus status});
+  $Res call({ReqMessage message, SendMessageStatus status});
 
   $ReqMessageCopyWith<$Res> get message;
 }
@@ -258,15 +285,10 @@ class _$SendMessageCopyWithImpl<$Res, $Val extends SendMessage>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? message = null,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -295,7 +317,7 @@ abstract class _$$_SendMessageCopyWith<$Res>
       __$$_SendMessageCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, ReqMessage message, SendMessageStatus status});
+  $Res call({ReqMessage message, SendMessageStatus status});
 
   @override
   $ReqMessageCopyWith<$Res> get message;
@@ -312,15 +334,10 @@ class __$$_SendMessageCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? message = null,
     Object? status = null,
   }) {
     return _then(_$_SendMessage(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -336,14 +353,11 @@ class __$$_SendMessageCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_SendMessage implements _SendMessage {
-  const _$_SendMessage(
-      {required this.id, required this.message, required this.status});
+  const _$_SendMessage({required this.message, required this.status});
 
   factory _$_SendMessage.fromJson(Map<String, dynamic> json) =>
       _$$_SendMessageFromJson(json);
 
-  @override
-  final String id;
   @override
   final ReqMessage message;
   @override
@@ -351,7 +365,7 @@ class _$_SendMessage implements _SendMessage {
 
   @override
   String toString() {
-    return 'SendMessage(id: $id, message: $message, status: $status)';
+    return 'SendMessage(message: $message, status: $status)';
   }
 
   @override
@@ -359,14 +373,13 @@ class _$_SendMessage implements _SendMessage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SendMessage &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, message, status);
+  int get hashCode => Object.hash(runtimeType, message, status);
 
   @JsonKey(ignore: true)
   @override
@@ -384,15 +397,12 @@ class _$_SendMessage implements _SendMessage {
 
 abstract class _SendMessage implements SendMessage {
   const factory _SendMessage(
-      {required final String id,
-      required final ReqMessage message,
+      {required final ReqMessage message,
       required final SendMessageStatus status}) = _$_SendMessage;
 
   factory _SendMessage.fromJson(Map<String, dynamic> json) =
       _$_SendMessage.fromJson;
 
-  @override
-  String get id;
   @override
   ReqMessage get message;
   @override

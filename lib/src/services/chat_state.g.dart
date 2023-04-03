@@ -7,6 +7,7 @@ part of 'chat_state.dart';
 // **************************************************************************
 
 _$_ChatState _$$_ChatStateFromJson(Map<String, dynamic> json) => _$_ChatState(
+      msgId: json['msgId'] as String,
       createTimeStamp: json['createTimeStamp'] as int,
       fromMe: json['fromMe'] == null
           ? null
@@ -18,6 +19,7 @@ _$_ChatState _$$_ChatStateFromJson(Map<String, dynamic> json) => _$_ChatState(
 
 Map<String, dynamic> _$$_ChatStateToJson(_$_ChatState instance) =>
     <String, dynamic>{
+      'msgId': instance.msgId,
       'createTimeStamp': instance.createTimeStamp,
       'fromMe': instance.fromMe,
       'fromBot': instance.fromBot,
@@ -25,14 +27,12 @@ Map<String, dynamic> _$$_ChatStateToJson(_$_ChatState instance) =>
 
 _$_SendMessage _$$_SendMessageFromJson(Map<String, dynamic> json) =>
     _$_SendMessage(
-      id: json['id'] as String,
       message: ReqMessage.fromJson(json['message'] as Map<String, dynamic>),
       status: $enumDecode(_$SendMessageStatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$$_SendMessageToJson(_$_SendMessage instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'message': instance.message,
       'status': _$SendMessageStatusEnumMap[instance.status]!,
     };
