@@ -37,9 +37,14 @@ class AddPortrait extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 //保存画像
-                                //todo 本地缓存
-                                ref.read(chatPortraitProvider.notifier).add()
-                                   
+                                ref
+                                    .read(chatPortraitProvider.notifier)
+                                    .addPortrait(
+                                        ref
+                                            .read(
+                                                getPortraitNameControllerProvider)
+                                            .text,
+                                        ref.read(getPortraitMsgProvider));
                               },
                               child: const Icon(
                                 Icons.check,
