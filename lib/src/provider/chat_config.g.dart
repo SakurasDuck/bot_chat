@@ -8,7 +8,9 @@ part of 'chat_config.dart';
 
 String _$chatModelHash() => r'b07634e7aff6304291bf96623f55c1c1c6808a99';
 
-/// See also [ChatModel].
+///聊天模型状态
+///
+/// Copied from [ChatModel].
 @ProviderFor(ChatModel)
 final chatModelProvider = NotifierProvider<ChatModel, String>.internal(
   ChatModel.new,
@@ -20,11 +22,13 @@ final chatModelProvider = NotifierProvider<ChatModel, String>.internal(
 );
 
 typedef _$ChatModel = Notifier<String>;
-String _$botPortraitHash() => r'f8094e9c12320d467489684e9ca7f2a9ec35a210';
+String _$botPortraitHash() => r'f3fb688b167240cc73137b12ab66d27e53ecbec3';
 
-/// See also [BotPortrait].
+///聊天画像状态
+///
+/// Copied from [BotPortrait].
 @ProviderFor(BotPortrait)
-final botPortraitProvider = NotifierProvider<BotPortrait, dynamic>.internal(
+final botPortraitProvider = NotifierProvider<BotPortrait, Portrait?>.internal(
   BotPortrait.new,
   name: r'botPortraitProvider',
   debugGetCreateSourceHash:
@@ -33,5 +37,5 @@ final botPortraitProvider = NotifierProvider<BotPortrait, dynamic>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$BotPortrait = Notifier<dynamic>;
+typedef _$BotPortrait = Notifier<Portrait?>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

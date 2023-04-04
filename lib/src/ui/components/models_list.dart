@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../provider/chat_state.dart';
 import '../widgets/refresh.dart';
 
 class ModelsList extends StatelessWidget {
@@ -86,6 +87,8 @@ class ModelsList extends StatelessWidget {
             ? FloatingActionButton(
                 onPressed: () {
                   ref.read(modelListEffectProvider.notifier).onSave();
+                  //清空当前聊天记录
+                  ref.read(chatStoreProvider.notifier).resetContent();
                   context.pop();
                 },
                 backgroundColor: const Color(0xFF075E54),

@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 enum Role implements Comparable<String> {
-  system('system'), //系统
-  user('user'), //用户
-  assistant('assistant'); //助手
+  SYSTEM('system'), //系统
+  USER('user'), //用户
+  ASSISTANT('assistant'); //助手
 
   const Role(this.value);
 

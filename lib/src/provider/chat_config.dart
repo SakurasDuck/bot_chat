@@ -23,9 +23,13 @@ class BotPortrait extends _$BotPortrait {
   @override
   Portrait? build() => null;
 
-
   //修改画像
-  void onChange(Portrait portrait) {
-    state = portrait;
+  bool onChange(Portrait portrait) {
+    if (state == portrait) {
+      return false;
+    } else {
+      state = portrait;
+      return true;
+    }
   }
 }

@@ -1,8 +1,14 @@
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 
+import 'markdow_code_builder.dart';
+
 class BotMessageCard extends StatelessWidget {
-  const BotMessageCard({Key? key,required this.message,
-    required this.date,}) : super(key: key);
+  const BotMessageCard({
+    Key? key,
+    required this.message,
+    required this.date,
+  }) : super(key: key);
 
   final String message;
   final String date;
@@ -23,19 +29,22 @@ class BotMessageCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 30,
+                    top: 5,
+                    bottom: 20,
                   ),
-                ),
-              ),
+                  child: ExtendedText(
+                    message,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                    onSpecialTextTap: (dynamic parameter) {
+                      print(parameter);
+                    },
+                    specialTextSpanBuilder: MySpecialTextSpanBuilder(),
+                  )),
               Positioned(
                 bottom: 2,
                 right: 10,
@@ -55,3 +64,7 @@ class BotMessageCard extends StatelessWidget {
   }
 }
 
+class MySpecialTextSpanBuilder extends RegExpSpecialTextSpanBuilder {
+  @override
+  List<RegExpSpecialText> get regExps => [CodeView()];
+}

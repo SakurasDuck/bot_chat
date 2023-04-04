@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../provider/chat_state.dart';
 import '../../provider/portrait_list.dart';
 import '../widgets/portrait_msgs.dart';
 
 class ChatPortraits extends StatelessWidget {
-  const ChatPortraits({this.toChoose = false, super.key});
-
-  //是否可以点击选择
-  final bool toChoose;
+  const ChatPortraits({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +17,8 @@ class ChatPortraits extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF075E54),
         elevation: 0,
-        title: Text(
-          '${toChoose ? '选择' : ''}系统画像',
+        title: const Text(
+          '选择系统画像',
         ),
         centerTitle: false,
       ),
@@ -32,24 +30,23 @@ class ChatPortraits extends StatelessWidget {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   final portrait = portraitMsgs[index];
-                  final child = PortraitItem(
-                    index: index,
-                    msg: portrait,
-                  );
-                  if (toChoose) {
-                    return Consumer(
-                        builder: (context, ref, child) => GestureDetector(
-                              onTap: () {
-                                ref
-                                    .read(botPortraitProvider.notifier)
-                                    .onChange(portrait);
+                  return Consumer(
+                      builder: (context, ref, child) => GestureDetector(
+                            onTap: () {
+                              final result = ref
+                                  .read(botPortraitProvider.notifier)
+                                  .onChange(portrait);
+                              if (result) {
+                                //  //清空当前聊天记录
+                                //   ref.read(chatStoreProvider.notifier).resetContent();
                                 context.pop();
-                              },
-                              child: child,
-                            ));
-                  } else {
-                    return child;
-                  }
+                              }
+                            },
+                            child: PortraitItem(
+                              index: index,
+                              msg: portrait,
+                            ),
+                          ));
                 },
                 itemCount: portraitMsgs.length,
               ),

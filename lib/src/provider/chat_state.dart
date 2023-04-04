@@ -51,7 +51,7 @@ class ChatStore extends _$ChatStore {
         msgId: msgId,
         createTimeStamp: DateTime.now().millisecondsSinceEpoch,
         fromMe: SendMessage(
-            message: ReqMessage(content: content, role: Role.user.toString()),
+            message: ReqMessage(content: content, role: Role.USER.toString()),
             status: SendMessageStatus.SENDING));
     //添加到消息列表,并刷新 UI
     modify((state) => state..add(userMsg));
@@ -134,8 +134,15 @@ class ChatStore extends _$ChatStore {
 
   //将历史消息转换为reqMesaage
   List<ReqMessage> _getReqMessage() {
+    final msgs = <ReqMessage>[];
     //先添加设定消息
-    return state
+    final botPortrait = ref.read(botPortraitProvider);
+    if (botPortrait != null) {
+      msgs.addAll(botPortrait.msgs
+          .map((e) => ReqMessage(content: e, role: Role.SYSTEM.toString())));
+    }
+
+    msgs.addAll(state
         .where((element) =>
             element.fromBot != null ||
             (element.fromMe != null &&
@@ -143,13 +150,14 @@ class ChatStore extends _$ChatStore {
         .map<ReqMessage>((e) {
       if (e.fromMe != null) {
         return ReqMessage(
-            content: e.fromMe!.message.content, role: Role.user.toString());
+            content: e.fromMe!.message.content, role: Role.USER.toString());
       } else {
         return ReqMessage(
             content: e.fromBot!.choices.first.message.content,
-            role: Role.assistant.toString());
+            role: Role.ASSISTANT.toString());
       }
-    }).toList();
+    }).toList());
+    return msgs;
   }
 }
 
