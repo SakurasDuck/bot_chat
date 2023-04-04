@@ -20,4 +20,18 @@ final chatModelProvider = NotifierProvider<ChatModel, String>.internal(
 );
 
 typedef _$ChatModel = Notifier<String>;
+String _$botPortraitHash() => r'f8094e9c12320d467489684e9ca7f2a9ec35a210';
+
+/// See also [BotPortrait].
+@ProviderFor(BotPortrait)
+final botPortraitProvider = NotifierProvider<BotPortrait, dynamic>.internal(
+  BotPortrait.new,
+  name: r'botPortraitProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$botPortraitHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$BotPortrait = Notifier<dynamic>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

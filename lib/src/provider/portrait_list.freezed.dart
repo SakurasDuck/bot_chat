@@ -22,7 +22,8 @@ Portrait _$PortraitFromJson(Map<String, dynamic> json) {
 mixin _$Portrait {
 //消息
   List<String> get msgs => throw _privateConstructorUsedError; //画像名称
-  String get name => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError; //画像来源
+  PortraitSource get source => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $PortraitCopyWith<$Res> {
   factory $PortraitCopyWith(Portrait value, $Res Function(Portrait) then) =
       _$PortraitCopyWithImpl<$Res, Portrait>;
   @useResult
-  $Res call({List<String> msgs, String name});
+  $Res call({List<String> msgs, String name, PortraitSource source});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$PortraitCopyWithImpl<$Res, $Val extends Portrait>
   $Res call({
     Object? msgs = null,
     Object? name = null,
+    Object? source = null,
   }) {
     return _then(_value.copyWith(
       msgs: null == msgs
@@ -63,6 +65,10 @@ class _$PortraitCopyWithImpl<$Res, $Val extends Portrait>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as PortraitSource,
     ) as $Val);
   }
 }
@@ -74,7 +80,7 @@ abstract class _$$_PortraitCopyWith<$Res> implements $PortraitCopyWith<$Res> {
       __$$_PortraitCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> msgs, String name});
+  $Res call({List<String> msgs, String name, PortraitSource source});
 }
 
 /// @nodoc
@@ -90,6 +96,7 @@ class __$$_PortraitCopyWithImpl<$Res>
   $Res call({
     Object? msgs = null,
     Object? name = null,
+    Object? source = null,
   }) {
     return _then(_$_Portrait(
       msgs: null == msgs
@@ -100,6 +107,10 @@ class __$$_PortraitCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      source: null == source
+          ? _value.source
+          : source // ignore: cast_nullable_to_non_nullable
+              as PortraitSource,
     ));
   }
 }
@@ -107,7 +118,10 @@ class __$$_PortraitCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Portrait implements _Portrait {
-  const _$_Portrait({required final List<String> msgs, required this.name})
+  const _$_Portrait(
+      {required final List<String> msgs,
+      required this.name,
+      required this.source})
       : _msgs = msgs;
 
   factory _$_Portrait.fromJson(Map<String, dynamic> json) =>
@@ -126,10 +140,13 @@ class _$_Portrait implements _Portrait {
 //画像名称
   @override
   final String name;
+//画像来源
+  @override
+  final PortraitSource source;
 
   @override
   String toString() {
-    return 'Portrait(msgs: $msgs, name: $name)';
+    return 'Portrait(msgs: $msgs, name: $name, source: $source)';
   }
 
   @override
@@ -138,13 +155,14 @@ class _$_Portrait implements _Portrait {
         (other.runtimeType == runtimeType &&
             other is _$_Portrait &&
             const DeepCollectionEquality().equals(other._msgs, _msgs) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.source, source) || other.source == source));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_msgs), name);
+      runtimeType, const DeepCollectionEquality().hash(_msgs), name, source);
 
   @JsonKey(ignore: true)
   @override
@@ -163,7 +181,8 @@ class _$_Portrait implements _Portrait {
 abstract class _Portrait implements Portrait {
   const factory _Portrait(
       {required final List<String> msgs,
-      required final String name}) = _$_Portrait;
+      required final String name,
+      required final PortraitSource source}) = _$_Portrait;
 
   factory _Portrait.fromJson(Map<String, dynamic> json) = _$_Portrait.fromJson;
 
@@ -171,6 +190,8 @@ abstract class _Portrait implements Portrait {
   List<String> get msgs;
   @override //画像名称
   String get name;
+  @override //画像来源
+  PortraitSource get source;
   @override
   @JsonKey(ignore: true)
   _$$_PortraitCopyWith<_$_Portrait> get copyWith =>

@@ -3,6 +3,7 @@ import 'package:chat_ui/src/provider/portrait_list.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AddPortrait extends StatelessWidget {
   const AddPortrait({super.key});
@@ -32,27 +33,29 @@ class AddPortrait extends StatelessWidget {
                         ),
                         centerTitle: false,
                         actions: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 15),
-                            child: GestureDetector(
-                              onTap: () {
-                                //保存画像
-                                ref
-                                    .read(chatPortraitProvider.notifier)
-                                    .addPortrait(
-                                        ref
-                                            .read(
-                                                getPortraitNameControllerProvider)
-                                            .text,
-                                        ref.read(getPortraitMsgProvider));
-                              },
-                              child: const Icon(
-                                Icons.check,
-                                size: 26,
-                                color: Colors.white,
+                          Consumer(builder: (context, ref, child) {
+                            final show = ref.watch(getShowSaveBtnProvider);
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (!show) return;
+                                  //保存画像
+                                  final result = ref
+                                      .read(chatPortraitProvider.notifier)
+                                      .addPortrait();
+                                  if (result) {
+                                    context.pop();
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.check,
+                                  size: 26,
+                                  color: show ? Colors.white : Colors.grey,
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          }),
                         ],
                       ),
                       body: CustomScrollView(
@@ -160,7 +163,7 @@ class AddPortrait extends StatelessWidget {
                                     },
                                     child: Container(
                                       width: 60,
-                                      height: 35,
+                                      height: 35,                                   
                                       decoration: BoxDecoration(
                                         color: const Color(0xFF075E54),
                                         borderRadius: BorderRadius.circular(30),

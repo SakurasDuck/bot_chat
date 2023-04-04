@@ -16,10 +16,9 @@ class GetPortraitMsg extends _$GetPortraitMsg {
   void addMsg() {
     final ctrl = ref.read(getEditMsgControllerProvider);
     state = state..add(ctrl.text);
-    
+
     ref.read(getShowEditMsgInputProvider.notifier).onChange();
     ctrl.text = '';
-    
   }
 }
 
@@ -45,10 +44,14 @@ class GetShowEditMsgInput extends _$GetShowEditMsgInput {
   }
 }
 
-
 @riverpod
-class  GetEditMsgFocusNode extends _$GetEditMsgFocusNode{
+class GetEditMsgFocusNode extends _$GetEditMsgFocusNode {
   @override
   FocusNode build() => FocusNode();
 }
-  
+
+@Riverpod(dependencies: [GetPortraitMsg, GetPortraitNameController])
+bool getShowSaveBtn(GetShowSaveBtnRef ref) {
+  return ref.watch(getPortraitMsgProvider).isNotEmpty &&
+      ref.watch(getPortraitNameControllerProvider).text.isNotEmpty;
+}

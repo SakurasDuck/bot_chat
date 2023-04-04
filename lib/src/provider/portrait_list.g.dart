@@ -9,19 +9,45 @@ part of 'portrait_list.dart';
 _$_Portrait _$$_PortraitFromJson(Map<String, dynamic> json) => _$_Portrait(
       msgs: (json['msgs'] as List<dynamic>).map((e) => e as String).toList(),
       name: json['name'] as String,
+      source: $enumDecode(_$PortraitSourceEnumMap, json['source']),
     );
 
 Map<String, dynamic> _$$_PortraitToJson(_$_Portrait instance) =>
     <String, dynamic>{
       'msgs': instance.msgs,
       'name': instance.name,
+      'source': _$PortraitSourceEnumMap[instance.source]!,
     };
+
+const _$PortraitSourceEnumMap = {
+  PortraitSource.ASSETS: 0,
+  PortraitSource.USER: 1,
+  PortraitSource.NETWORK: 2,
+};
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chatPortraitHash() => r'53f026184c3497cc2901d58cac0c3bdfbcd309c5';
+String _$loadPortraitsFromAssetsHash() =>
+    r'dc97f894d462530e5828377abb2d905bac69260f';
+
+/// See also [loadPortraitsFromAssets].
+@ProviderFor(loadPortraitsFromAssets)
+final loadPortraitsFromAssetsProvider =
+    AutoDisposeFutureProvider<List<Portrait>>.internal(
+  loadPortraitsFromAssets,
+  name: r'loadPortraitsFromAssetsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$loadPortraitsFromAssetsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef LoadPortraitsFromAssetsRef
+    = AutoDisposeFutureProviderRef<List<Portrait>>;
+String _$chatPortraitHash() => r'6cbc472dee6e91e603c7e5343a0e711072680952';
 
 /// See also [ChatPortrait].
 @ProviderFor(ChatPortrait)

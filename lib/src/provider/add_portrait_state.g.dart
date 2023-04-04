@@ -6,6 +6,27 @@ part of 'add_portrait_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$getShowSaveBtnHash() => r'29644dd141af156ba73dd1b17621bd81f9f5253c';
+
+/// See also [getShowSaveBtn].
+@ProviderFor(getShowSaveBtn)
+final getShowSaveBtnProvider = AutoDisposeProvider<bool>.internal(
+  getShowSaveBtn,
+  name: r'getShowSaveBtnProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getShowSaveBtnHash,
+  dependencies: <ProviderOrFamily>[
+    getPortraitMsgProvider,
+    getPortraitNameControllerProvider
+  ],
+  allTransitiveDependencies: <ProviderOrFamily>[
+    getPortraitMsgProvider,
+    getPortraitNameControllerProvider
+  ],
+);
+
+typedef GetShowSaveBtnRef = AutoDisposeProviderRef<bool>;
 String _$getPortraitMsgHash() => r'51a0ebd56fe3b668eaddb78a520d0fd14c914f25';
 
 /// See also [GetPortraitMsg].

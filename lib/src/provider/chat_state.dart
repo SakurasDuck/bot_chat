@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
-import '../config/role.dart';
+import '../config/enums.dart';
 import '../services/chat_api.dart';
 import '../services/chat_state.dart';
 import '../services/message.dart';
@@ -85,8 +85,6 @@ class ChatStore extends _$ChatStore {
 
   ///调用请求发送消息
   Future<void> _request(String msgId) async {
-    await Future.delayed(const Duration(seconds: 5));
-
     //发送消息
     SendMessageStatus requestStatus = SendMessageStatus.ERROR;
     final response =
