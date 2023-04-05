@@ -8,21 +8,32 @@ class CodeView extends RegExpSpecialText {
 
   final double width;
 
-  static const String _regExp = r"'''.*?'''";
+  static const String _regExp = '```.*?```';
 
   @override
-  RegExp get regExp => RegExp(_regExp, multiLine: true);
+  RegExp get regExp =>
+      RegExp(_regExp, multiLine: true, dotAll: true, caseSensitive: true);
 
   @override
   InlineSpan finishText(int start, Match match,
       {TextStyle? textStyle, SpecialTextGestureTapCallback? onTap}) {
     return WidgetSpan(
         child: SizedBox(
-      width: width,
-      height: height,
+      // width: width,
+      // height: height,
       child: Markdown(
+        shrinkWrap: true,
         data: match.group(0) ?? '',
       ),
     ));
   }
+}
+
+class MySpecialTextSpanBuilder extends RegExpSpecialTextSpanBuilder {
+  MySpecialTextSpanBuilder(this.width);
+
+  final double width;
+
+  @override
+  List<RegExpSpecialText> get regExps => [CodeView(width: width)];
 }
