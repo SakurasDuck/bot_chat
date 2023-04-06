@@ -20,6 +20,42 @@
 > ui为手机样式,可能会适配多端
 
 
+## flutter项目
+
+`riverpod`+`gitit`+`go_router`
+### 依赖
+
+ 1. [flutter](https://flutter.dev/)
+ 2. [riverpod](https://pub.dev/packages/riverpod)
+ 3. [flutter_riverpod](https://pub.dev/packages/flutter_riverpod)
+ 4. [get_it](https://pub.dev/packages/get_it)
+ 5. [freezed_annotation](https://pub.dev/packages/freezed_annotation)
+ 6. [json_annotation](https://pub.dev/packages/json_annotation)
+ 7. [http](https://pub.dev/packages/http)
+ 8. [flutter_screenutil](https://pub.dev/packages/flutter_screenutil)
+ 9. [dio](https://pub.dev/packages/dio)
+ 10. [riverpod_annotation](https://pub.dev/packages/riverpod_annotation)
+ 11. [uuid](https://pub.dev/packages/uuid)
+ 12. [go_router](https://pub.dev/packages/go_router)
+ 13. [extended_text_field](https://pub.dev/packages/extended_text_field)
+ 14. [bot_toast](https://pub.dev/packages/bot_toast)
+ 15. [intl](https://pub.dev/packages/intl)
+ 16. [async](https://pub.dev/packages/async)
+ 17. [flutter_slidable](https://pub.dev/packages/flutter_slidable)
+ 18. [darq](https://pub.dev/packages/darq)
+ 19. [extended_list](https://pub.dev/packages/extended_list)
+ 20. [flutter_slider_drawer](https://pub.dev/packages/flutter_slider_drawer)
+ 21. [flutter_markdown](https://pub.dev/packages/flutter_markdown)
+ 22. [extended_text](https://pub.dev/packages/extended_text)
+ 23. [nil](https://pub.dev/packages/nil)  
+
+>  dev  
+
+ 24. [icons_launcher](https://pub.dev/packages/icons_launcher)
+ 25. [freezed](https://pub.dev/packages/freezed)
+
+
+
 ## todo 
 [待办事项](https://turquoise-birch-d43.notion.site/for-Bot-Chat-2a7a2dc866fb43bd8d7772e7195cc227)
 

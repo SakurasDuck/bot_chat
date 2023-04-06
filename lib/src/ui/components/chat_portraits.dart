@@ -37,8 +37,10 @@ class ChatPortraits extends StatelessWidget {
                                   .read(botPortraitProvider.notifier)
                                   .onChange(portrait);
                               if (result) {
-                                //  //清空当前聊天记录
-                                //   ref.read(chatStoreProvider.notifier).resetContent();
+                                //清空当前聊天记录
+                                ref
+                                    .read(chatStoreProvider.notifier)
+                                    .resetContent();
                                 context.pop();
                               }
                             },
