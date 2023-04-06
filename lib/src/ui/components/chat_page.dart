@@ -69,10 +69,7 @@ class ChatView extends StatelessWidget {
                           minLines: 1,
                           controller: controller,
                           onSubmitted: (text) {
-                            final chatStore =
-                                ref.read(chatStoreProvider.notifier);
-                            chatStore.sendMessage(text);
-                            controller.text = '';
+                            _sendMessage(text, ref, controller);
                           },
                           decoration: InputDecoration(
                             filled: true,
@@ -82,10 +79,13 @@ class ChatView extends StatelessWidget {
                                     horizontal: 20.0),
                                 child: GestureDetector(
                                     onTap: () {
-                                      final chatStore =
-                                          ref.read(chatStoreProvider.notifier);
-                                      chatStore.sendMessage(controller.text);
-                                      controller.text = '';
+                                      _sendMessage(
+                                          ref
+                                              .read(
+                                                  getTextEditControllerProvider)
+                                              .text,
+                                          ref,
+                                          controller);
                                     },
                                     child: ValueListenableBuilder(
                                         valueListenable: controller,
@@ -115,5 +115,17 @@ class ChatView extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  void _sendMessage(
+      String content, WidgetRef ref, TextEditingController controller) {
+    //处理消息文本,去除前后空格,换行符
+    content = content.trim().replaceAll(RegExp(r'\n+$'), '');
+    if (content.isEmpty) {
+      return;
+    }
+    final chatStore = ref.read(chatStoreProvider.notifier);
+    chatStore.sendMessage(content);
+    controller.text = '';
   }
 }

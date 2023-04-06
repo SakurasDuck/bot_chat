@@ -42,9 +42,6 @@ class ChatStore extends _$ChatStore {
   ///发送消息
   ///[content] 内容
   Future<void> sendMessage(String content) async {
-    //处理消息文本,去除前后空格,换行符
-    content = content.trim().replaceAll(RegExp(r'\n+$'), '');
-
     //创建本地消息
     final msgId = ref.read<Uuid>(getUuidProvider).v1();
     final userMsg = ChatState(

@@ -1,6 +1,7 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter/services.dart';
 
 import 'markdow_code_builder.dart';
 
@@ -30,30 +31,26 @@ class BotMessageCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ),
-                child: Markdown(
-                  shrinkWrap: true,
-                  data: message,
-                ),
-              ),
-              // child: Builder(
-              //     builder: (context) => ExtendedText(
-              //           message,
-              //           style: const TextStyle(
-              //             fontSize: 16,
-              //           ),
-              //           onSpecialTextTap: (dynamic parameter) {
-              //             print(parameter);
-              //           },
-              //           specialTextSpanBuilder: MySpecialTextSpanBuilder(
-              //             MediaQuery.of(context).size.width - 45,
-              //           ),
-              //         ))),
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 30,
+                    top: 5,
+                    bottom: 20,
+                  ),
+                  child: Builder(
+                      builder: (context) => ExtendedText(
+                            message,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            onSpecialTextTap: (dynamic parameter) {
+                              Clipboard.setData(ClipboardData(text: parameter));
+                              BotToast.showText(text: '已复制代码到剪切板');
+                            },
+                            specialTextSpanBuilder: MySpecialTextSpanBuilder(
+                              MediaQuery.of(context).size.width - 45,
+                            ),
+                          ))),
               Positioned(
                 bottom: 2,
                 right: 10,

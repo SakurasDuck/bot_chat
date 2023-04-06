@@ -17,13 +17,19 @@ class CodeView extends RegExpSpecialText {
   @override
   InlineSpan finishText(int start, Match match,
       {TextStyle? textStyle, SpecialTextGestureTapCallback? onTap}) {
+    final code = match.group(0) ?? '';
     return WidgetSpan(
-        child: SizedBox(
-      // width: width,
-      // height: height,
-      child: Markdown(
-        shrinkWrap: true,
-        data: match.group(0) ?? '',
+        child: GestureDetector(
+      onTap: () {
+        onTap?.call(code);
+      },
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: Markdown(
+          shrinkWrap: true,
+          data: code,
+        ),
       ),
     ));
   }

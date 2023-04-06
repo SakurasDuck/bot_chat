@@ -145,14 +145,25 @@ class HttpEnhancedClient extends BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) {
-    return GetIt.instance.get<Client>(instanceName: 'baseClient').send(request);
+    return GetIt.instance.get<Client>(instanceName: _baseClinet).send(request);
   }
 
-  static void instance(List<ProxyProgram> proxyPrograms) {
-    GetIt.instance.registerLazySingleton<Client>(() => createClient(),
-        instanceName: 'baseClient');
+  static void instance(List<ProxyProgram> proxyPrograms, {String? ioProxy}) {
+    GetIt.instance.registerLazySingleton<Client>(() => createClient(ioProxy),
+        instanceName: _baseClinet);
 
     GetIt.instance
         .registerLazySingleton<Client>(() => HttpEnhancedClient(proxyPrograms));
   }
+
+  static void resetProxy(String ioProxy) {
+    //注销
+    GetIt.instance.unregister<Client>(instanceName: _baseClinet);
+
+    //重置客户端代理
+    GetIt.instance.registerLazySingleton<Client>(() => createClient(ioProxy),
+        instanceName: _baseClinet);
+  }
+
+  static const _baseClinet = 'baseClient';
 }

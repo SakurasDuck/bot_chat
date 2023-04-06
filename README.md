@@ -1,16 +1,27 @@
-# chat_ui
+# bot_chat
 
-A new Flutter project.
+基于ChatGPT API 封装UI的聊天界面    
 
-## Getting Started
+## 功能  
 
-This project is a starting point for a Flutter application.
+ 1. 通过ChatGPT API获取上下文聊天内容
+ 2. 配置聊天画像
+ 3. 设置自己OpenAI api key
+ 4. 设置代理(web 不能设置代理)  
 
-A few resources to get you started if this is your first Flutter project:
+## 支持  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Windows
+2. Android
+3. iOS
+4. Web  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 使用
+> ui为手机样式,可能会适配多端
+
+
+## todo 
+[待办事项](https://turquoise-birch-d43.notion.site/for-Bot-Chat-2a7a2dc866fb43bd8d7772e7195cc227)
+
+![main](snapshots/main.png) ![setting](snapshots/setting.png)
+

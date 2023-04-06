@@ -1,6 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../config/const.dart';
+import '../config/open_api_key/get_api_key.dart';
 import 'portrait_list.dart';
 
 part 'chat_config.g.dart';
@@ -31,5 +33,37 @@ class BotPortrait extends _$BotPortrait {
       state = portrait;
       return true;
     }
+  }
+}
+
+///设置代理
+@riverpod
+class ProxyConfig extends _$ProxyConfig {
+  @override
+  String? build() => null;
+
+  //修改代理
+  void onChange(String proxy) {
+    state = proxy;
+  }
+}
+
+@riverpod
+class GetOpenAPIKey extends _$GetOpenAPIKey {
+  @override
+  String build() => GetIt.instance.get<GetAPIKey>().call();
+
+  @override
+  set state(String value) {
+    //to reset GetIt
+    GetIt.instance.unregister<GetAPIKey>();
+
+    GetIt.instance.registerSingleton<GetAPIKey>(() => value);
+
+    super.state = value;
+  }
+
+  void onChange(String key) {
+    state = key;
   }
 }
