@@ -1,5 +1,8 @@
 # bot_chat
 
+## 账号被封了,有缘再见  
+
+
 基于ChatGPT API 封装UI的聊天界面    
 
 ## 功能  
