@@ -6,7 +6,7 @@ part of 'splash_load.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$onLoadHash() => r'48f1998b9a70560eb0e71d22affa6d798f04b492';
+String _$onLoadHash() => r'537df7fb68cc86ffc8a14930bb8bb63267f7b936';
 
 /// See also [onLoad].
 @ProviderFor(onLoad)

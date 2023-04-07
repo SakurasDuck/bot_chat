@@ -47,12 +47,12 @@ final loadPortraitsFromAssetsProvider =
 
 typedef LoadPortraitsFromAssetsRef
     = AutoDisposeFutureProviderRef<List<Portrait>>;
-String _$chatPortraitHash() => r'6cbc472dee6e91e603c7e5343a0e711072680952';
+String _$chatPortraitHash() => r'a47342ed7428c6bd8a954bfa3a2366ab81864625';
 
 /// See also [ChatPortrait].
 @ProviderFor(ChatPortrait)
 final chatPortraitProvider =
-    AutoDisposeNotifierProvider<ChatPortrait, List<Portrait>>.internal(
+    AutoDisposeNotifierProvider<ChatPortrait, List<Portrait?>>.internal(
   ChatPortrait.new,
   name: r'chatPortraitProvider',
   debugGetCreateSourceHash:
@@ -61,5 +61,5 @@ final chatPortraitProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ChatPortrait = AutoDisposeNotifier<List<Portrait>>;
+typedef _$ChatPortrait = AutoDisposeNotifier<List<Portrait?>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

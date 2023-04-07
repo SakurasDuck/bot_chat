@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_strategy/url_strategy.dart';
+
 import 'src/config/open_api_key/get_api_key.dart';
 import 'src/http_clinet/clinet.dart';
 import 'src/routes/route.dart';
@@ -14,6 +16,7 @@ void main() {
   ]);
   apisInstance();
   initKey();
+  setPathUrlStrategy();
   runApp(const ProviderScope(child: MyApp()));
 }
 

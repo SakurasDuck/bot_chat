@@ -4,3 +4,17 @@ const ENVKEY='OPENAI_API_KEY';
 const BASE_HOST = 'https://api.openai.com';
 
 const DEFAULT_CHAT_MODEL='gpt-3.5-turbo';
+
+
+//缓存key_name
+const CACHED_OPENAI_API_KEY='OPENAI_API_KEY';
+
+const CACHED_PROXY_PATH='PROXY_PATH';
+
+const CACHED_MODEL_NAME='MODEL_NAME';
+
+const CACHED_BOT_PORTRAIT='BOT_PORTRAIT';
+
+const CACHED_PORTRAIT_LIST='PORTRAIT_LIST';
+
+const CACHED_MSG_LIST='MSG_LIST';

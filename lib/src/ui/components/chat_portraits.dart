@@ -30,25 +30,59 @@ class ChatPortraits extends StatelessWidget {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   final portrait = portraitMsgs[index];
-                  return Consumer(
-                      builder: (context, ref, child) => GestureDetector(
-                            onTap: () {
-                              final result = ref
-                                  .read(botPortraitProvider.notifier)
-                                  .onChange(portrait);
-                              if (result) {
+
+                  if (portrait == null) {
+                    return Consumer(
+                        builder: (context, ref, child) => GestureDetector(
+                              onTap: () {
+                                ref.read(botPortraitProvider.notifier)
+                                  ..reset()
+                                  ..toCache();
                                 //清空当前聊天记录
                                 ref
                                     .read(chatStoreProvider.notifier)
                                     .resetContent();
                                 context.pop();
-                              }
-                            },
-                            child: PortraitItem(
-                              index: index,
-                              msg: portrait,
-                            ),
-                          ));
+                              },
+                              child: Card(
+                                elevation: 8,
+                                shadowColor: const Color(0xff2da9ef),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Text('无',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                              ),
+                            ));
+                  } else {
+                    return Consumer(
+                        builder: (context, ref, child) => GestureDetector(
+                              onTap: () {
+                                final riverpod =
+                                    ref.read(botPortraitProvider.notifier);
+                                final result = riverpod.onChange(portrait);
+                                riverpod.toCache();
+                                if (result) {
+                                  //清空当前聊天记录
+                                  ref
+                                      .read(chatStoreProvider.notifier)
+                                      .resetContent();
+                                  context.pop();
+                                }
+                              },
+                              child: PortraitItem(
+                                index: index,
+                                msg: portrait,
+                              ),
+                            ));
+                  }
                 },
                 itemCount: portraitMsgs.length,
               ),

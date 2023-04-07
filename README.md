@@ -22,7 +22,7 @@
 
 ## flutter项目
 
-`riverpod`+`gitit`+`go_router`
+`riverpod`+`get_it`+`go_router`
 ### 依赖
 
  1. [flutter](https://flutter.dev/)

@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 
+import '../provider/splash_load.dart';
 import '../ui/components/add_portraits.dart';
 import '../ui/components/chat_page.dart';
 import '../ui/components/chat_portraits.dart';
@@ -21,7 +23,7 @@ final router = GoRouter(
             GoRoute(
               name: 'models',
               path: 'models',
-              builder: (context, state) => const ModelsList( ),
+              builder: (context, state) => const ModelsList(),
             ),
             GoRoute(
                 name: 'portraits',
@@ -36,7 +38,14 @@ final router = GoRouter(
                 ])
           ]),
     ],
+    redirect: kIsWeb
+        ? (context, routerState) async {
+            final result = await isInited;
+            if (!result) {
+              return '/';
+            }
+          }
+        : null,
+
     //bot_toast config
-    observers: [
-      BotToastNavigatorObserver()
-    ]);
+    observers: [BotToastNavigatorObserver()]);

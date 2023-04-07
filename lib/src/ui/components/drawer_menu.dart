@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../http_clinet/clinet.dart';
 import '../widgets/text_edit.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -137,28 +136,23 @@ class MyDrawer extends StatelessWidget {
                                         onSubmitted: (text) {
                                           //地址校验
                                           //设置代理
-                                          if (text.isNotEmpty) {
-                                            HttpEnhancedClient.resetProxy(text);
-                                            ref
-                                                .read(proxyConfigProvider
-                                                    .notifier)
-                                                .onChange(text);
-                                            Navigator.of(context).pop();
-                                          }
+                                          ref.read(proxyConfigProvider.notifier)
+                                            ..onChange(text)
+                                            ..toCache();
+                                          Navigator.of(context).pop();
                                         },
                                         onBack: (context) {
                                           Navigator.of(context).pop();
                                         },
                                       ),
                                   opaque: false));
-                                  
                             },
                             leading: const Icon(
                               Icons.vpn_lock,
                               size: 26,
                             ),
                             title: Text(
-                              proxy ?? '代理-未设置',
+                              proxy.isNotEmpty ? proxy : '代理-未设置',
                               overflow: TextOverflow.ellipsis,
                               softWrap: true,
                             )),
@@ -177,9 +171,9 @@ class MyDrawer extends StatelessWidget {
                                     hintText: '请输入Open API Key',
                                     onSubmitted: (text) {
                                       if (text.isNotEmpty) {
-                                        ref
-                                            .read(getOpenAPIKeyProvider.notifier)
-                                            .onChange(text);
+                                        ref.read(getOpenAPIKeyProvider.notifier)
+                                          ..onChange(text)
+                                          ..toCache();
                                         Navigator.of(context).pop();
                                       }
                                     },

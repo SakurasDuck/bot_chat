@@ -20,13 +20,15 @@ class ModelListEffect extends _$ModelListEffect {
 
   //保存
   void onSave() {
-    ref.read(chatModelProvider.notifier).onChange(state);
+    ref.read(chatModelProvider.notifier)
+      ..onChange(state)
+      ..toCache();
   }
 }
 
-@Riverpod(dependencies: [ChatModel,ModelListEffect])
+@Riverpod(dependencies: [ChatModel, ModelListEffect])
 bool modelCanSave(ModelCanSaveRef ref) {
-  return ref.watch(modelListEffectProvider)!=ref.watch(chatModelProvider);
+  return ref.watch(modelListEffectProvider) != ref.watch(chatModelProvider);
 }
 
 @riverpod

@@ -23,7 +23,7 @@ final modelCanSaveProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef ModelCanSaveRef = AutoDisposeProviderRef<bool>;
-String _$modelListEffectHash() => r'ce8f4424a21d81479bb20af8bd84347c8dcd1f05';
+String _$modelListEffectHash() => r'ee19f6af00ac3d3dc75309b423ed00f4e9e64255';
 
 /// See also [ModelListEffect].
 @ProviderFor(ModelListEffect)

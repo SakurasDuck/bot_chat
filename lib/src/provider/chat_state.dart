@@ -1,4 +1,7 @@
-import 'package:bot_toast/bot_toast.dart';
+import 'dart:convert';
+
+import 'package:chat_ui/src/config/const.dart';
+import 'package:chat_ui/src/kv_store/kvstore.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -37,6 +40,8 @@ class ChatStore extends _$ChatStore {
 
   void modify(List<ChatState> Function(List<ChatState> state) setState) {
     state = setState(super.state);
+    //写缓存
+    _cacheMessage();
   }
 
   ///发送消息
@@ -59,25 +64,31 @@ class ChatStore extends _$ChatStore {
       ref.read(getScrollerControllerProvider.notifier).scroll2Last();
     });
 
-    // Future.delayed(const Duration(seconds: 2)).then((value) {
-    //   modify((state) {
-    //     final index = state.indexWhere((element) => element.msgId == msgId);
-    //     state[index] = state[index].copyWith(
-    //         fromMe:
-    //             state[index].fromMe!.copyWith(status: SendMessageStatus.SENT));
-    //     return state;
-    //   });
-    // });
-    // return;
-
     //发送请求
     return _request(msgId);
   }
 
   ///重新发送消息
-  Future<void> resendMEssage(String msgId) async {
+  Future<void> resendMessage(String msgId) async {
+    //重置状态
+    modify((state) {
+      final index = state.indexWhere((element) => element.msgId == msgId);
+      state[index] = state[index].copyWith(
+          fromMe:
+              state[index].fromMe!.copyWith(status: SendMessageStatus.SENDING));
+      return state;
+    });
     //发送请求
     return _request(msgId);
+  }
+
+  //缓存消息
+  void _cacheMessage() {
+    if (state.isEmpty) {
+      kvStore.remove(CACHED_MSG_LIST);
+    } else {
+      kvStore.setString(CACHED_MSG_LIST, jsonEncode(state));
+    }
   }
 
   ///调用请求发送消息
@@ -155,6 +166,23 @@ class ChatStore extends _$ChatStore {
       }
     }).toList());
     return msgs;
+  }
+
+  ///加载历史消息
+  Future<void> loadHistoryMessage() async {
+    final cache = await kvStore.getString(CACHED_MSG_LIST);
+    if (cache == null) {
+      return;
+    } else {
+      final List<ChatState> historyMsgs = (jsonDecode(cache) as List<dynamic>)
+          .map<ChatState>((e) => ChatState.fromJson(e))
+          .toList();
+      modify((state) => state..addAll(historyMsgs));
+      //在渲染完成之后滚动到底部
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        ref.read(getScrollerControllerProvider.notifier).scroll2Last();
+      });
+    }
   }
 }
 

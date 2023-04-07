@@ -6,7 +6,7 @@ part of 'chat_config.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chatModelHash() => r'b07634e7aff6304291bf96623f55c1c1c6808a99';
+String _$chatModelHash() => r'2a53fb32287f4b3262111c14d0493e7d890cd5ce';
 
 ///聊天模型状态
 ///
@@ -22,7 +22,7 @@ final chatModelProvider = NotifierProvider<ChatModel, String>.internal(
 );
 
 typedef _$ChatModel = Notifier<String>;
-String _$botPortraitHash() => r'669d5e6936ab7a032ec5b4b91ea787ce3c515ae2';
+String _$botPortraitHash() => r'fa098e133486ab94c786ba185fc074f645dc0394';
 
 ///聊天画像状态
 ///
@@ -38,14 +38,13 @@ final botPortraitProvider = NotifierProvider<BotPortrait, Portrait?>.internal(
 );
 
 typedef _$BotPortrait = Notifier<Portrait?>;
-String _$proxyConfigHash() => r'c3e654ea9eac4f47f58be4dcb927929b52c052ef';
+String _$proxyConfigHash() => r'f6f99df1eee9748905eca8da1b0e9d53bcf210e4';
 
 ///设置代理
 ///
 /// Copied from [ProxyConfig].
 @ProviderFor(ProxyConfig)
-final proxyConfigProvider =
-    AutoDisposeNotifierProvider<ProxyConfig, String?>.internal(
+final proxyConfigProvider = NotifierProvider<ProxyConfig, String>.internal(
   ProxyConfig.new,
   name: r'proxyConfigProvider',
   debugGetCreateSourceHash:
@@ -54,13 +53,12 @@ final proxyConfigProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ProxyConfig = AutoDisposeNotifier<String?>;
-String _$getOpenAPIKeyHash() => r'db6a7d313d6641b216a783777be9913a73af639e';
+typedef _$ProxyConfig = Notifier<String>;
+String _$getOpenAPIKeyHash() => r'4e3c7f69e53181f36917339b1d58cbee47ae8fa7';
 
 /// See also [GetOpenAPIKey].
 @ProviderFor(GetOpenAPIKey)
-final getOpenAPIKeyProvider =
-    AutoDisposeNotifierProvider<GetOpenAPIKey, String>.internal(
+final getOpenAPIKeyProvider = NotifierProvider<GetOpenAPIKey, String>.internal(
   GetOpenAPIKey.new,
   name: r'getOpenAPIKeyProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -70,5 +68,5 @@ final getOpenAPIKeyProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$GetOpenAPIKey = AutoDisposeNotifier<String>;
+typedef _$GetOpenAPIKey = Notifier<String>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
