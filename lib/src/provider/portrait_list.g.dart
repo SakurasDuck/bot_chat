@@ -47,7 +47,7 @@ final loadPortraitsFromAssetsProvider =
 
 typedef LoadPortraitsFromAssetsRef
     = AutoDisposeFutureProviderRef<List<Portrait>>;
-String _$chatPortraitHash() => r'a47342ed7428c6bd8a954bfa3a2366ab81864625';
+String _$chatPortraitHash() => r'7476f4e5f909d94d6667c0fc4308ff6bc64e89ad';
 
 /// See also [ChatPortrait].
 @ProviderFor(ChatPortrait)

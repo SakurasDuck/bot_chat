@@ -25,7 +25,6 @@ Future<void> onLoad(OnLoadRef ref) async {
     ]);
 
     //暂时延迟1秒,然后跳转到聊天界面
-    ;
     return true;
   }, instanceName: _instanceName);
 
@@ -53,7 +52,6 @@ Future<void> _getCacheProxy(Ref ref) async {
   final proxy = await kvStore.getString(CACHED_PROXY_PATH);
   if (proxy != null) {
     ref.read(proxyConfigProvider.notifier).onChange(proxy);
-    
   }
 }
 

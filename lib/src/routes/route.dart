@@ -44,6 +44,7 @@ final router = GoRouter(
             if (!result) {
               return '/';
             }
+            return null;
           }
         : null,
 

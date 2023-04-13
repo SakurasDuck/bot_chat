@@ -1,16 +1,21 @@
 # bot_chat
 
-## 账号被封了,有缘再见  
-
-
 基于ChatGPT API 封装UI的聊天界面    
 
-## 功能  
+## 功能 :  
 
- 1. 通过ChatGPT API获取上下文聊天内容
- 2. 配置聊天画像
- 3. 设置自己OpenAI api key
- 4. 设置代理(web 不能设置代理)  
+  #### 版本1 :  
+  
+   1. 通过ChatGPT API获取上下文聊天内容
+   2. 配置聊天画像
+   3. 设置自己OpenAI api key
+   4. 设置代理(web 不能设置代理)  
+
+  #### 版本2(进行中) :  
+
+  1. 没有输入key时,高亮提示
+  2. 抽象ui与聊天逻辑,实现插拔式聊天逻辑
+  3. 实现多种聊天逻辑(对话,提问,图片生成,语音转文字)
 
 ## 支持  
 
@@ -51,6 +56,7 @@
  21. [flutter_markdown](https://pub.dev/packages/flutter_markdown)
  22. [extended_text](https://pub.dev/packages/extended_text)
  23. [nil](https://pub.dev/packages/nil)  
+ 24. [showcaseview](https://pub.dev/packages/showcaseview)
 
 >  dev  
 

@@ -1,10 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:chat_ui/src/provider/chat_state.dart';
+import 'package:chat_ui/src/provider/drawer_ctrl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../widgets/text_edit.dart';
 
@@ -35,6 +37,12 @@ class MyDrawer extends StatelessWidget {
                             size: 26,
                           ),
                           onTap: () {
+                            //如果没有设置OPENAI API key,弹出高亮
+                            if (ref.read(needShowHignLightProvider)) {
+                              ref.read(toShowHignLightProvider);
+                              return;
+                            }
+
                             if (show) {
                               BotToast.showEnhancedWidget(
                                 clickClose: true,
@@ -160,38 +168,42 @@ class MyDrawer extends StatelessWidget {
                     }),
                   Consumer(builder: (context, ref, child) {
                     final key = ref.watch(getOpenAPIKeyProvider);
-                    return Tooltip(
-                      message: 'API Key',
-                      child: ListTile(
-                          onTap: () {
-                            Navigator.of(context).push(PageRouteBuilder(
-                                reverseTransitionDuration:
-                                    const Duration(milliseconds: 0),
-                                pageBuilder: (context, _, __) => TextEdit(
-                                    hintText: '请输入Open API Key',
-                                    onSubmitted: (text) {
-                                      if (text.isNotEmpty) {
-                                        ref.read(getOpenAPIKeyProvider.notifier)
-                                          ..onChange(text)
-                                          ..toCache();
-                                        Navigator.of(context).pop();
-                                      }
-                                    },
-                                    onBack: (context) {
-                                      Navigator.of(context).pop();
-                                    }),
-                                opaque: false));
-                          },
-                          leading: const Icon(
-                            Icons.key,
-                            size: 26,
-                          ),
-                          title: Text(
-                            key.isNotEmpty ? '******' : 'Key-未设置',
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: true,
-                          )),
-                    );
+                    return Showcase(
+                        key: ref.watch(highLightKeyProvider),
+                        description: '请输入你的OPENAI API Key',
+                        child: Tooltip(
+                          message: 'API Key',
+                          child: ListTile(
+                              onTap: () {
+                                Navigator.of(context).push(PageRouteBuilder(
+                                    reverseTransitionDuration:
+                                        const Duration(milliseconds: 0),
+                                    pageBuilder: (context, _, __) => TextEdit(
+                                        hintText: '请输入Open API Key',
+                                        onSubmitted: (text) {
+                                          if (text.isNotEmpty) {
+                                            ref.read(
+                                                getOpenAPIKeyProvider.notifier)
+                                              ..onChange(text)
+                                              ..toCache();
+                                            Navigator.of(context).pop();
+                                          }
+                                        },
+                                        onBack: (context) {
+                                          Navigator.of(context).pop();
+                                        }),
+                                    opaque: false));
+                              },
+                              leading: const Icon(
+                                Icons.key,
+                                size: 26,
+                              ),
+                              title: Text(
+                                key.isNotEmpty ? '******' : 'Key-未设置',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                              )),
+                        ));
                   }),
                   Expanded(child: Container()),
                   if (show)

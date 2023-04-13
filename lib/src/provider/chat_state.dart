@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:chat_ui/src/config/const.dart';
 import 'package:chat_ui/src/kv_store/kvstore.dart';
+import 'package:chat_ui/src/provider/drawer_ctrl.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:uuid/uuid.dart';
 
 import '../config/enums.dart';
@@ -206,7 +208,14 @@ class GetFocusNode extends _$GetFocusNode {
     //监听焦点,获取焦点时,滚动到底部
     foucsNode.addListener(() {
       if (foucsNode.hasFocus) {
-        ref.read(getScrollerControllerProvider.notifier).scroll2Last();
+        //如果获取焦点时并没有设置OPENAI API KEY,则展开抽屉并高亮提示
+        if (ref.read(needShowHignLightProvider)) {
+          ref.read(toShowHignLightProvider);
+          //弹出提示后,将焦点移除
+          state.unfocus();
+        } else {
+          ref.read(getScrollerControllerProvider.notifier).scroll2Last();
+        }
       }
     });
     return foucsNode;

@@ -153,7 +153,7 @@ final getUuidProvider = Provider<Uuid>.internal(
 );
 
 typedef GetUuidRef = ProviderRef<Uuid>;
-String _$chatStoreHash() => r'd81f1f680620200da87e98bc9428a5b6b0938497';
+String _$chatStoreHash() => r'971015ca0a0fd0859409fb23f9942cd675795940';
 
 /// See also [ChatStore].
 @ProviderFor(ChatStore)

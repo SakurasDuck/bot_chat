@@ -38,7 +38,7 @@ final botPortraitProvider = NotifierProvider<BotPortrait, Portrait?>.internal(
 );
 
 typedef _$BotPortrait = Notifier<Portrait?>;
-String _$proxyConfigHash() => r'f6f99df1eee9748905eca8da1b0e9d53bcf210e4';
+String _$proxyConfigHash() => r'df4d4b5db677cc1381842925ef0f19c63d8a0b39';
 
 ///设置代理
 ///
