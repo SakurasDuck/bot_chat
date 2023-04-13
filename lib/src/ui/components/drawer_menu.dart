@@ -166,45 +166,49 @@ class MyDrawer extends StatelessWidget {
                             )),
                       );
                     }),
-                  Consumer(builder: (context, ref, child) {
-                    final key = ref.watch(getOpenAPIKeyProvider);
-                    return Showcase(
-                        key: ref.watch(highLightKeyProvider),
-                        description: '请输入你的OPENAI API Key',
-                        child: Tooltip(
-                          message: 'API Key',
-                          child: ListTile(
-                              onTap: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                    reverseTransitionDuration:
-                                        const Duration(milliseconds: 0),
-                                    pageBuilder: (context, _, __) => TextEdit(
-                                        hintText: '请输入Open API Key',
-                                        onSubmitted: (text) {
-                                          if (text.isNotEmpty) {
-                                            ref.read(
-                                                getOpenAPIKeyProvider.notifier)
-                                              ..onChange(text)
-                                              ..toCache();
-                                            Navigator.of(context).pop();
-                                          }
-                                        },
-                                        onBack: (context) {
-                                          Navigator.of(context).pop();
-                                        }),
-                                    opaque: false));
-                              },
-                              leading: const Icon(
-                                Icons.key,
-                                size: 26,
-                              ),
-                              title: Text(
-                                key.isNotEmpty ? '******' : 'Key-未设置',
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: true,
-                              )),
-                        ));
-                  }),
+                  Consumer(
+                      builder: (context, ref, child) => Showcase(
+                          key: ref.watch(highLightKeyProvider),
+                          description: '请输入你的OPENAI API Key',
+                          child: Consumer(
+                            builder: (context, ref, child) => Tooltip(
+                              message: 'API Key',
+                              child: ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).push(PageRouteBuilder(
+                                        reverseTransitionDuration:
+                                            const Duration(milliseconds: 0),
+                                        pageBuilder: (context, _, __) =>
+                                            TextEdit(
+                                                hintText: '请输入Open API Key',
+                                                onSubmitted: (text) {
+                                                  if (text.isNotEmpty) {
+                                                    ref.read(
+                                                        getOpenAPIKeyProvider
+                                                            .notifier)
+                                                      ..onChange(text)
+                                                      ..toCache();
+                                                    Navigator.of(context).pop();
+                                                  }
+                                                },
+                                                onBack: (context) {
+                                                  Navigator.of(context).pop();
+                                                }),
+                                        opaque: false));
+                                  },
+                                  leading: const Icon(
+                                    Icons.key,
+                                    size: 26,
+                                  ),
+                                  title: Text(
+                                    ref.watch(getOpenAPIKeyProvider).isNotEmpty
+                                        ? '******'
+                                        : 'Key-未设置',
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                  )),
+                            ),
+                          ))),
                   Expanded(child: Container()),
                   if (show)
                     Container(

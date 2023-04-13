@@ -7,5 +7,5 @@ import 'api_key_base.dart'
 typedef GetAPIKey = String Function();
 
 void initKey() {
-  GetIt.instance.registerSingleton<GetAPIKey>(() => OPENAI_API_KEY ?? '');
+  GetIt.instance.registerSingleton<GetAPIKey>(() => OPENAI_API_KEY);
 }
