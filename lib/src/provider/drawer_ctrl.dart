@@ -10,7 +10,9 @@ part 'drawer_ctrl.g.dart';
 @riverpod
 class DrawerCtrlKey extends _$DrawerCtrlKey {
   @override
-  GlobalKey<SliderDrawerState> build() => GlobalKey<SliderDrawerState>();
+  GlobalKey<SliderDrawerState> build() {
+    return GlobalKey<SliderDrawerState>();
+  }
 
   // 打开抽屉
   void openDrawer() {
@@ -19,6 +21,15 @@ class DrawerCtrlKey extends _$DrawerCtrlKey {
       return;
     }
     state.currentState?.openSlider();
+  }
+
+  // 切换
+  void toggle() {
+    if (state.currentState == null) {
+      debugPrint('state.currentState==null');
+      return;
+    }
+    state.currentState?.toggle();
   }
 }
 
