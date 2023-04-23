@@ -6,22 +6,22 @@ part of 'drawer_ctrl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$toShowHignLightHash() => r'ac3dd0602992038fc2e31a02e287e33bbc4e3edc';
+String _$toShowHighLightHash() => r'aa236128e4adea74501c87d8cbf817cc2c63f507';
 
-/// See also [toShowHignLight].
-@ProviderFor(toShowHignLight)
-final toShowHignLightProvider = AutoDisposeProvider<void>.internal(
-  toShowHignLight,
-  name: r'toShowHignLightProvider',
+/// See also [toShowHighLight].
+@ProviderFor(toShowHighLight)
+final toShowHighLightProvider = AutoDisposeProvider<void>.internal(
+  toShowHighLight,
+  name: r'toShowHighLightProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$toShowHignLightHash,
+      : _$toShowHighLightHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef ToShowHignLightRef = AutoDisposeProviderRef<void>;
-String _$needShowHignLightHash() => r'b94a3393ede74ca777d8d52e656c14065d3d3632';
+typedef ToShowHighLightRef = AutoDisposeProviderRef<void>;
+String _$needShowHignLightHash() => r'e253b8de79917d3763fec08aa187530fc73bb9ab';
 
 /// See also [needShowHignLight].
 @ProviderFor(needShowHignLight)
@@ -36,7 +36,7 @@ final needShowHignLightProvider = AutoDisposeProvider<bool>.internal(
 );
 
 typedef NeedShowHignLightRef = AutoDisposeProviderRef<bool>;
-String _$drawerCtrlKeyHash() => r'9f9dbe2e2e8caabd1683459fea18d6bfc8ca0a20';
+String _$drawerCtrlKeyHash() => r'272d2dbea7a1bf60bcb36daf28a64d739b591fc0';
 
 ///抽屉控制 key
 ///

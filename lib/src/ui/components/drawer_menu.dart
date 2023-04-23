@@ -22,7 +22,7 @@ class MyDrawer extends StatelessWidget {
           data: ThemeData(brightness: Brightness.dark),
           child: Consumer(
             builder: (context, ref, child) {
-              final show = ref.watch(chatStoreProvider).isNotEmpty;
+              final msgIsNotEmpty = ref.watch(chatStoreProvider).isNotEmpty;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
@@ -39,11 +39,11 @@ class MyDrawer extends StatelessWidget {
                           onTap: () {
                             //如果没有设置OPENAI API key,弹出高亮
                             if (ref.read(needShowHignLightProvider)) {
-                              ref.read(toShowHignLightProvider);
+                              ref.read(toShowHighLightProvider);
                               return;
                             }
 
-                            if (show) {
+                            if (msgIsNotEmpty) {
                               BotToast.showEnhancedWidget(
                                 clickClose: true,
                                 toastBuilder: (cancel) => AlertDialog(
@@ -52,7 +52,7 @@ class MyDrawer extends StatelessWidget {
                                     TextButton(
                                         onPressed: () {
                                           cancel();
-                                          context.goNamed('models');
+                                          context.pushNamed('models');
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
@@ -71,7 +71,7 @@ class MyDrawer extends StatelessWidget {
                                 ),
                               );
                             } else {
-                              context.goNamed('models');
+                              context.pushNamed('models');
                             }
                           },
                           title: Text(
@@ -85,48 +85,50 @@ class MyDrawer extends StatelessWidget {
                     final portrait = ref.watch(botPortraitProvider);
                     return Tooltip(
                       message: '聊天画像',
-                      child: ListTile(
-                          onTap: () {
-                            if (show) {
-                              BotToast.showEnhancedWidget(
-                                clickClose: true,
-                                toastBuilder: (cancel) => AlertDialog(
-                                  content: const Text('切换画像会清空当前聊天记录'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          cancel();
-                                          context.goNamed('portraits');
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 4),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(4)),
-                                          child: const Text(
-                                            '我知道了',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        )),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              context.goNamed('portraits');
-                            }
-                          },
-                          leading: const Icon(
-                            Icons.face,
-                            size: 26,
-                          ),
-                          title: Text(
-                            portrait?.name ?? '用户画像-未选择',
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: true,
-                          )),
+                      child: Builder(
+                        builder: (context) => ListTile(
+                            onTap: () {
+                              if (msgIsNotEmpty) {
+                                BotToast.showEnhancedWidget(
+                                  clickClose: true,
+                                  toastBuilder: (cancel) => AlertDialog(
+                                    content: const Text('切换画像会清空当前聊天记录'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            cancel();
+                                            context.pushNamed('portraits');
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 4),
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: const Text(
+                                              '我知道了',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                context.pushNamed('portraits');
+                              }
+                            },
+                            leading: const Icon(
+                              Icons.face,
+                              size: 26,
+                            ),
+                            title: Text(
+                              portrait?.name ?? '用户画像-未选择',
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                            )),
+                      ),
                     );
                   }),
                   if (!kIsWeb)
@@ -210,7 +212,7 @@ class MyDrawer extends StatelessWidget {
                             ),
                           ))),
                   Expanded(child: Container()),
-                  if (show)
+                  if (msgIsNotEmpty)
                     Container(
                       alignment: Alignment.center,
                       child: Tooltip(

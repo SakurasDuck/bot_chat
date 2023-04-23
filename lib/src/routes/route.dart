@@ -12,6 +12,7 @@ import '../ui/components/splash.dart';
 final router = GoRouter(
     routes: [
       GoRoute(
+        name: 'splash',
         path: '/',
         builder: (context, state) => const SplashView(),
       ),

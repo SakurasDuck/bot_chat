@@ -10,9 +10,7 @@ part 'drawer_ctrl.g.dart';
 @riverpod
 class DrawerCtrlKey extends _$DrawerCtrlKey {
   @override
-  GlobalKey<SliderDrawerState> build() {
-    return GlobalKey<SliderDrawerState>();
-  }
+  GlobalKey<SliderDrawerState> build() => GlobalKey<SliderDrawerState>();
 
   // 打开抽屉
   void openDrawer() {
@@ -42,7 +40,7 @@ class HighLightKey extends _$HighLightKey {
 
 // 当用户没有设置OPENAI API Key时,高亮提示
 @riverpod
-void toShowHignLight(ToShowHignLightRef ref) {
+void toShowHighLight(ToShowHighLightRef ref) {
   //展开抽屉
   ref.read(drawerCtrlKeyProvider.notifier).openDrawer();
   //高亮提示(因为展开抽屉是异步的)

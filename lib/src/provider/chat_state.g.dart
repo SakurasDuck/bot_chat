@@ -195,7 +195,7 @@ final getTextEditControllerProvider = AutoDisposeNotifierProvider<
 );
 
 typedef _$GetTextEditController = AutoDisposeNotifier<TextEditingController>;
-String _$getFocusNodeHash() => r'9e23d70d16a6593fb39ebe5048435f96e1b150f5';
+String _$getFocusNodeHash() => r'6f779300dd8e5d2f9750672c22d45d5158ac27db';
 
 /// 输入框焦点
 ///

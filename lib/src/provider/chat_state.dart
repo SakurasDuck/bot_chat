@@ -210,7 +210,7 @@ class GetFocusNode extends _$GetFocusNode {
       if (foucsNode.hasFocus) {
         //如果获取焦点时并没有设置OPENAI API KEY,则展开抽屉并高亮提示
         if (ref.read(needShowHignLightProvider)) {
-          ref.read(toShowHignLightProvider);
+          ref.read(toShowHighLightProvider);
           //弹出提示后,将焦点移除
           state.unfocus();
         } else {
