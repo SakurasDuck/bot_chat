@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../provider/chat_state.dart';
+import '../../provider/chat/chat/chat_state.dart';
+import '../../provider/chat/common/chat_state.dart';
 import '../../services/chat_state.dart';
 import '../widgets/bot_message_card.dart';
 import '../widgets/send_message_card.dart';

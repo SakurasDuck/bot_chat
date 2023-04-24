@@ -1,9 +1,9 @@
-import 'package:chat_ui/src/config/api_execption.dart';
-import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import '../../config/api_execption.dart';
 import '../../config/global_ref.dart';
+import '../../provider/chat/chat/chat_config.dart';
 import 'base_proxy.dart';
 
 Future<Response> checkStatusCodeProgram(Future<Response> Function() callback,

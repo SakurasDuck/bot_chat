@@ -1,11 +1,11 @@
-import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:chat_ui/src/ui/widgets/refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../provider/chat_state.dart';
-import '../../provider/portrait_list.dart';
+import '../../provider/chat/chat/chat_config.dart';
+import '../../provider/chat/chat/chat_state.dart';
+import '../../provider/portrait/portrait_list.dart';
 import '../widgets/portrait_msgs.dart';
 
 class ChatPortraits extends StatelessWidget {

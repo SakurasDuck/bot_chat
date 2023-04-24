@@ -1,13 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:chat_ui/src/provider/chat_config.dart';
-import 'package:chat_ui/src/provider/chat_state.dart';
-import 'package:chat_ui/src/provider/drawer_ctrl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import '../../provider/chat/chat/chat_config.dart';
+import '../../provider/chat/chat/chat_state.dart';
+import '../../provider/chat/common/drawer_ctrl.dart';
 import '../widgets/text_edit.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -38,7 +38,7 @@ class MyDrawer extends StatelessWidget {
                           ),
                           onTap: () {
                             //如果没有设置OPENAI API key,弹出高亮
-                            if (ref.read(needShowHignLightProvider)) {
+                            if (ref.read(needShowHighLightProvider)) {
                               ref.read(toShowHighLightProvider);
                               return;
                             }

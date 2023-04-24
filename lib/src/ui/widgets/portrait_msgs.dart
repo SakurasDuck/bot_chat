@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../../provider/portrait_list.dart';
+import '../../provider/portrait/portrait_list.dart';
 
 class PortraitItem extends StatelessWidget {
   const PortraitItem({required this.index, required this.msg, super.key});
@@ -56,7 +56,7 @@ class PortraitItem extends StatelessWidget {
                                   .fold(
                                       '',
                                       (previousValue, element) =>
-                                        '$previousValue\n  $element')
+                                          '$previousValue\n  $element')
                                   .replaceFirst(',', ''),
                               style: TextStyle(
                                 color: Colors.blue.shade700,

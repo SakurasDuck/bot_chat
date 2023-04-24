@@ -1,8 +1,9 @@
-import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:showcaseview/showcaseview.dart';
+
+import '../chat/chat_config.dart';
 
 part 'drawer_ctrl.g.dart';
 
@@ -56,7 +57,7 @@ void toShowHighLight(ToShowHighLightRef ref) {
 }
 
 @riverpod
-bool needShowHignLight(NeedShowHignLightRef ref) {
+bool needShowHighLight(NeedShowHighLightRef ref) {
   //如果没有设置OPENAI API Key,则高亮提示
   return ref.watch(getOpenAPIKeyProvider).isEmpty;
 }

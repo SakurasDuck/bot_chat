@@ -4,10 +4,10 @@ import 'package:chat_ui/src/kv_store/kvstore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../config/const.dart';
-import '../config/open_api_key/get_api_key.dart';
-import '../http_clinet/clinet.dart';
-import 'portrait_list.dart';
+import '../../../config/const.dart';
+import '../../../config/open_api_key/get_api_key.dart';
+import '../../../http_clinet/clinet.dart';
+import '../../portrait/portrait_list.dart';
 
 part 'chat_config.g.dart';
 

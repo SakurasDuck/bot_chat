@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:chat_ui/src/provider/chat_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../config/const.dart';
 import '../kv_store/kvstore.dart';
-import 'portrait_list.dart';
+import 'chat/chat/chat_config.dart';
+import 'portrait/portrait_list.dart';
 
 part 'splash_load.g.dart';
 

@@ -21,21 +21,21 @@ final toShowHighLightProvider = AutoDisposeProvider<void>.internal(
 );
 
 typedef ToShowHighLightRef = AutoDisposeProviderRef<void>;
-String _$needShowHignLightHash() => r'e253b8de79917d3763fec08aa187530fc73bb9ab';
+String _$needShowHighLightHash() => r'a635e93eeafeb3f119e2c1ec72d715768413ff06';
 
-/// See also [needShowHignLight].
-@ProviderFor(needShowHignLight)
-final needShowHignLightProvider = AutoDisposeProvider<bool>.internal(
-  needShowHignLight,
-  name: r'needShowHignLightProvider',
+/// See also [needShowHighLight].
+@ProviderFor(needShowHighLight)
+final needShowHighLightProvider = AutoDisposeProvider<bool>.internal(
+  needShowHighLight,
+  name: r'needShowHighLightProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$needShowHignLightHash,
+      : _$needShowHighLightHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef NeedShowHignLightRef = AutoDisposeProviderRef<bool>;
+typedef NeedShowHighLightRef = AutoDisposeProviderRef<bool>;
 String _$drawerCtrlKeyHash() => r'272d2dbea7a1bf60bcb36daf28a64d739b591fc0';
 
 ///抽屉控制 key

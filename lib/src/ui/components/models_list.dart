@@ -1,9 +1,9 @@
-import 'package:chat_ui/src/provider/model_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../provider/chat_state.dart';
+import '../../provider/chat/chat/chat_state.dart';
+import '../../provider/model/model_list.dart';
 import '../widgets/refresh.dart';
 
 class ModelsList extends StatelessWidget {

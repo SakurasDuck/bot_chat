@@ -1,9 +1,11 @@
-import 'package:chat_ui/src/provider/add_portrait_state.dart';
-import 'package:chat_ui/src/provider/portrait_list.dart';
+
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../provider/portrait/add_portrait_state.dart';
+import '../../provider/portrait/portrait_list.dart';
 
 class AddPortrait extends StatelessWidget {
   const AddPortrait({super.key});

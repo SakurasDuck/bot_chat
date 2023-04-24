@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../config/const.dart';
-import '../config/enums.dart';
+import '../../config/const.dart';
+import '../../config/enums.dart';
 import 'add_portrait_state.dart';
 
 part 'portrait_list.g.dart';

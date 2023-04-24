@@ -1,12 +1,12 @@
-import 'package:chat_ui/src/provider/chat_config.dart';
-import 'package:chat_ui/src/provider/drawer_ctrl.dart';
 import 'package:extended_text_field/extended_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-import '../../provider/chat_state.dart';
+import '../../provider/chat/chat/chat_config.dart';
+import '../../provider/chat/chat/chat_state.dart';
+import '../../provider/chat/common/drawer_ctrl.dart';
 import 'chat_list.dart';
 import 'drawer_menu.dart';
 

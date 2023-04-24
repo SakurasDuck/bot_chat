@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../services/apis.dart';
-import 'chat_config.dart';
+import '../../services/apis.dart';
+import '../chat/chat/chat_config.dart';
 
 part 'model_list.g.dart';
 
