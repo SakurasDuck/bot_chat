@@ -1,6 +1,8 @@
 import 'package:chat_ui/src/services/message.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../config/enums.dart';
+
 part 'chat_state.freezed.dart';
 part 'chat_state.g.dart';
 
@@ -28,4 +30,3 @@ class SendMessage with _$SendMessage {
       _$SendMessageFromJson(json);
 }
 
-enum SendMessageStatus { SENDING, SENT, ERROR }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/chat_state.dart';
+import '../../config/enums.dart';
 
 class SendMessageCard extends StatelessWidget {
   final String message;

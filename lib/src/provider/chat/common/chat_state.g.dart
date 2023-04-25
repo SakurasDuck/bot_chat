@@ -92,4 +92,22 @@ final getScrollingProvider =
 );
 
 typedef _$GetScrolling = AutoDisposeNotifier<bool>;
+String _$messageStoreHash() => r'07a06a467361a6a42dd121cc95fb899c131f3cab';
+
+///消息列表
+///
+/// Copied from [MessageStore].
+@ProviderFor(MessageStore)
+final messageStoreProvider = AutoDisposeNotifierProvider<MessageStore,
+    List<Message<UpMessageStatus, dynamic>>>.internal(
+  MessageStore.new,
+  name: r'messageStoreProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$messageStoreHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$MessageStore
+    = AutoDisposeNotifier<List<Message<UpMessageStatus, dynamic>>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

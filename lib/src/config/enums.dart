@@ -35,3 +35,6 @@ enum PortraitSource implements Comparable<int> {
   @override
   int compareTo(int other) => value.compareTo(other);
 }
+
+//发送状态
+enum SendMessageStatus { SENDING, SENT, ERROR }
