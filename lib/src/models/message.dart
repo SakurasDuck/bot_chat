@@ -6,15 +6,15 @@ part 'message.freezed.dart';
 part 'message.g.dart';
 
 ///消息
-@Freezed(genericArgumentFactories: true)
+@Freezed(genericArgumentFactories: true, addImplicitFinal: false)
 class Message<T extends UpMessageStatus, K> extends BaseMessageStruct
     with _$Message<T, K> {
   @Assert('upMessage != null || downMessage != null', '消息不能为空')
-  @Implements<UpMessageStruct<T>>()
-  @Implements<DownMessageStruct<K>>()
-  const factory Message({
-    required String msgId,
-    required int createTime,
+  @Implements.fromString('UpMessageStruct<T>')
+  @Implements.fromString('DownMessageStruct<K>')
+  factory Message({
+    required final String msgId,
+    required final int createTime,
     required int updateTime,
     T? upMessage,
     K? downMessage,
@@ -47,12 +47,35 @@ abstract class BaseMessageStruct {
   BaseMessageStruct(this.msgId, this.createTime, this.updateTime);
   final String msgId;
   final int createTime;
-  final int updateTime;
+  int updateTime;
+}
+
+extension ModifyBaseMessageStruct on BaseMessageStruct {
+  //更新时间
+  void update() {
+    updateTime = DateTime.now().millisecondsSinceEpoch;
+  }
 }
 
 ///上行消息结构体
 abstract class UpMessageStatus {
   UpMessageStatus(this.status);
-  final SendMessageStatus status;
+  SendMessageStatus status;
 }
 
+extension ModifyUpMessageStatus on UpMessageStatus {
+  //发送完成
+  void sent() {
+    status = SendMessageStatus.SENT;
+  }
+
+  //发送失败
+  void sendError() {
+    status = SendMessageStatus.ERROR;
+  }
+
+  //重发
+  void reSending() {
+    status = SendMessageStatus.SENDING;
+  }
+}

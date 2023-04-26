@@ -26,8 +26,11 @@ mixin _$Message<T extends UpMessageStatus, K> {
   String get msgId => throw _privateConstructorUsedError;
   int get createTime => throw _privateConstructorUsedError;
   int get updateTime => throw _privateConstructorUsedError;
+  set updateTime(int value) => throw _privateConstructorUsedError;
   T? get upMessage => throw _privateConstructorUsedError;
+  set upMessage(T? value) => throw _privateConstructorUsedError;
   K? get downMessage => throw _privateConstructorUsedError;
+  set downMessage(K? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson(
           Object? Function(T) toJsonT, Object? Function(K) toJsonK) =>
@@ -156,7 +159,7 @@ class __$$_MessageCopyWithImpl<T extends UpMessageStatus, K, $Res>
 /// @nodoc
 @JsonSerializable(genericArgumentFactories: true)
 class _$_Message<T extends UpMessageStatus, K> implements _Message<T, K> {
-  const _$_Message(
+  _$_Message(
       {required this.msgId,
       required this.createTime,
       required this.updateTime,
@@ -173,11 +176,11 @@ class _$_Message<T extends UpMessageStatus, K> implements _Message<T, K> {
   @override
   final int createTime;
   @override
-  final int updateTime;
+  int updateTime;
   @override
-  final T? upMessage;
+  T? upMessage;
   @override
-  final K? downMessage;
+  K? downMessage;
 
   @override
   String toString() {
@@ -224,12 +227,12 @@ class _$_Message<T extends UpMessageStatus, K> implements _Message<T, K> {
 
 abstract class _Message<T extends UpMessageStatus, K>
     implements Message<T, K>, UpMessageStruct<T>, DownMessageStruct<K> {
-  const factory _Message(
+  factory _Message(
       {required final String msgId,
       required final int createTime,
-      required final int updateTime,
-      final T? upMessage,
-      final K? downMessage}) = _$_Message<T, K>;
+      required int updateTime,
+      T? upMessage,
+      K? downMessage}) = _$_Message<T, K>;
 
   factory _Message.fromJson(
       Map<String, dynamic> json,
@@ -242,10 +245,13 @@ abstract class _Message<T extends UpMessageStatus, K>
   int get createTime;
   @override
   int get updateTime;
+  set updateTime(int value);
   @override
   T? get upMessage;
+  set upMessage(T? value);
   @override
   K? get downMessage;
+  set downMessage(K? value);
   @override
   @JsonKey(ignore: true)
   _$$_MessageCopyWith<T, K, _$_Message<T, K>> get copyWith =>

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:chat_ui/src/provider/chat/chat/chat_instance.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,6 +17,7 @@ Future<void> onLoad(OnLoadRef ref) async {
   GetIt.instance.registerLazySingletonAsync<bool>(() async {
     //加载缓存
     await Future.wait([
+      initProvider(),
       _getCacheOpenAIAPIKey(ref),
       _getCacheProxy(ref),
       _getCacheModel(ref),
@@ -30,6 +32,11 @@ Future<void> onLoad(OnLoadRef ref) async {
 
   await GetIt.instance.getAsync<bool>(instanceName: _instanceName);
   return;
+}
+
+///初始化provider
+Future<void> initProvider() async {
+  init();
 }
 
 //通过get_it去判断是否成功初始化

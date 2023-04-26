@@ -1,8 +1,8 @@
+import 'package:chat_ui/src/provider/chat/common/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../provider/chat/chat/chat_state.dart';
 import '../../provider/model/model_list.dart';
 import '../widgets/refresh.dart';
 
@@ -88,7 +88,7 @@ class ModelsList extends StatelessWidget {
                 onPressed: () {
                   ref.read(modelListEffectProvider.notifier).onSave();
                   //清空当前聊天记录
-                  ref.read(chatStoreProvider.notifier).resetContent();
+                  ref.read(messageStoreProvider.notifier).resetChat();
                   context.pop();
                 },
                 backgroundColor: const Color(0xFF075E54),

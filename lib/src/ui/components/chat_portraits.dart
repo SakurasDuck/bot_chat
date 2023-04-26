@@ -1,3 +1,4 @@
+import 'package:chat_ui/src/provider/chat/common/chat_state.dart';
 import 'package:chat_ui/src/ui/widgets/refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,8 +41,8 @@ class ChatPortraits extends StatelessWidget {
                                   ..toCache();
                                 //清空当前聊天记录
                                 ref
-                                    .read(chatStoreProvider.notifier)
-                                    .resetContent();
+                                    .read(messageStoreProvider.notifier)
+                                    .resetChat();
                                 context.pop();
                               },
                               child: Card(
@@ -72,8 +73,8 @@ class ChatPortraits extends StatelessWidget {
                                 if (result) {
                                   //清空当前聊天记录
                                   ref
-                                      .read(chatStoreProvider.notifier)
-                                      .resetContent();
+                                      .read(messageStoreProvider.notifier)
+                                      .resetChat();
                                   context.pop();
                                 }
                               },

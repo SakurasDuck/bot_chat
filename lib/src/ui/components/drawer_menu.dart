@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:chat_ui/src/provider/chat/common/chat_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,7 @@ class MyDrawer extends StatelessWidget {
           data: ThemeData(brightness: Brightness.dark),
           child: Consumer(
             builder: (context, ref, child) {
-              final msgIsNotEmpty = ref.watch(chatStoreProvider).isNotEmpty;
+              final msgIsNotEmpty = ref.watch(messageStoreProvider).isNotEmpty;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
@@ -228,8 +229,8 @@ class MyDrawer extends StatelessWidget {
                                       onPressed: () {
                                         cancel();
                                         ref
-                                            .read(chatStoreProvider.notifier)
-                                            .resetContent();
+                                            .read(messageStoreProvider.notifier)
+                                            .resetChat();
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(

@@ -21,6 +21,7 @@ UpMessage _$UpMessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UpMessage {
   SendMessageStatus get status => throw _privateConstructorUsedError;
+  set status(SendMessageStatus value) => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   Role get role => throw _privateConstructorUsedError;
 
@@ -117,14 +118,14 @@ class __$$_UpMessageCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_UpMessage implements _UpMessage {
-  const _$_UpMessage(
+  _$_UpMessage(
       {required this.status, required this.content, required this.role});
 
   factory _$_UpMessage.fromJson(Map<String, dynamic> json) =>
       _$$_UpMessageFromJson(json);
 
   @override
-  final SendMessageStatus status;
+  SendMessageStatus status;
   @override
   final String content;
   @override
@@ -134,20 +135,6 @@ class _$_UpMessage implements _UpMessage {
   String toString() {
     return 'UpMessage(status: $status, content: $content, role: $role)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_UpMessage &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.content, content) || other.content == content) &&
-            (identical(other.role, role) || other.role == role));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, status, content, role);
 
   @JsonKey(ignore: true)
   @override
@@ -164,8 +151,8 @@ class _$_UpMessage implements _UpMessage {
 }
 
 abstract class _UpMessage implements UpMessage {
-  const factory _UpMessage(
-      {required final SendMessageStatus status,
+  factory _UpMessage(
+      {required SendMessageStatus status,
       required final String content,
       required final Role role}) = _$_UpMessage;
 
@@ -174,6 +161,7 @@ abstract class _UpMessage implements UpMessage {
 
   @override
   SendMessageStatus get status;
+  set status(SendMessageStatus value);
   @override
   String get content;
   @override

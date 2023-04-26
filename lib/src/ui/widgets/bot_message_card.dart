@@ -1,19 +1,16 @@
-import 'package:bot_toast/bot_toast.dart';
-import 'package:extended_text/extended_text.dart';
+import 'package:chat_ui/src/models/message.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'markdow_code_builder.dart';
+import 'package:intl/intl.dart';
 
 class BotMessageCard extends StatelessWidget {
   const BotMessageCard({
     Key? key,
+    required this.downMessageBuilder,
     required this.message,
-    required this.date,
   }) : super(key: key);
+  final Widget Function() downMessageBuilder;
 
-  final String message;
-  final String date;
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -37,25 +34,13 @@ class BotMessageCard extends StatelessWidget {
                     top: 5,
                     bottom: 20,
                   ),
-                  child: Builder(
-                      builder: (context) => ExtendedText(
-                            message,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                            onSpecialTextTap: (dynamic parameter) {
-                              Clipboard.setData(ClipboardData(text: parameter));
-                              BotToast.showText(text: '已复制代码到剪切板');
-                            },
-                            specialTextSpanBuilder: MySpecialTextSpanBuilder(
-                              MediaQuery.of(context).size.width - 45,
-                            ),
-                          ))),
+                  child: downMessageBuilder()),
               Positioned(
                 bottom: 2,
                 right: 10,
                 child: Text(
-                  date,
+                  DateFormat('HH:mm').format(
+                      DateTime.fromMillisecondsSinceEpoch(message.createTime)),
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.grey[600],

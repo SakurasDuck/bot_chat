@@ -1,7 +1,6 @@
 import 'package:chat_ui/src/models/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../provider/chat/chat/chat_state.dart';
 import '../../provider/chat/common/chat_state.dart';
@@ -104,28 +103,32 @@ class ChatList extends StatelessWidget {
                   );
                 }
               },
-              future: ref.read(chatStoreProvider.notifier).loadHistoryMessage(),
+              future:
+                  ref.read(messageStoreProvider.notifier).loadHistoryMessage(),
             ));
   }
 
   Widget renderRightItem(Message data) {
     return Consumer(
         builder: (context, ref, child) => SendMessageCard(
-              resendMessageFunc: () {
-                ref.read(chatStoreProvider.notifier).resendMessage(data.msgId);
+              contentBuilder: () {
+                return ref
+                    .read(messageStoreProvider.notifier)
+                    .buildUpMsgContent(data);
               },
-              sendStatus: data.upMessage!.status,
-              message: 'data.fromMe!.message.content',
-              date: DateFormat('HH:mm')
-                  .format(DateTime.fromMillisecondsSinceEpoch(data.createTime)),
+              resendMessageFunc: () {
+                ref.read(messageStoreProvider.notifier).resend(data.msgId);
+              },
+              message: data,
             ));
   }
 
   Widget renderLeftItem(Message data) {
-    return BotMessageCard(
-      message: data.downMessage!.choices.first.message.content,
-      date: DateFormat('HH:mm')
-          .format(DateTime.fromMillisecondsSinceEpoch(data.createTime)),
-    );
+    return Consumer(
+        builder: (context, ref, child) => BotMessageCard(
+            downMessageBuilder: () => ref
+                .read(messageStoreProvider.notifier)
+                .buildDownMsgContent(data),
+            message: data));
   }
 }

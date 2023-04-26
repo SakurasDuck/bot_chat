@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../config/enums.dart';
+import '../../models/message.dart';
 
 class SendMessageCard extends StatelessWidget {
-  final String message;
-  final String date;
-  final SendMessageStatus sendStatus;
+  final Message message;
 
   final Function resendMessageFunc;
-  const SendMessageCard(
-      {super.key,
-      required this.resendMessageFunc,
-      required this.sendStatus,
-      required this.message,
-      required this.date});
+
+  final Widget Function() contentBuilder;
+  const SendMessageCard({
+    super.key,
+    required this.contentBuilder,
+    required this.message,
+    required this.resendMessageFunc,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final sendStatus = message.upMessage!.status;
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
@@ -39,12 +42,7 @@ class SendMessageCard extends StatelessWidget {
                     right: 30,
                     top: 5,
                   ),
-                  child: Text(
-                    message,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
+                  child: contentBuilder(),
                 ),
                 Container(
                   alignment: Alignment.centerRight,
@@ -57,7 +55,9 @@ class SendMessageCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        date,
+                        DateFormat('HH:mm').format(
+                            DateTime.fromMillisecondsSinceEpoch(
+                                message.createTime)),
                         style: const TextStyle(
                           fontSize: 13,
                           color: Colors.grey,
