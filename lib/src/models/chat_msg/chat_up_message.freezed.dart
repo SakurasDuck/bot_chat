@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'up_message.dart';
+part of 'chat_up_message.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-UpMessage _$UpMessageFromJson(Map<String, dynamic> json) {
-  return _UpMessage.fromJson(json);
+ChatUpMessage _$ChatUpMessageFromJson(Map<String, dynamic> json) {
+  return _ChatUpMessage.fromJson(json);
 }
 
 /// @nodoc
-mixin _$UpMessage {
+mixin _$ChatUpMessage {
   SendMessageStatus get status => throw _privateConstructorUsedError;
   set status(SendMessageStatus value) => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
@@ -27,22 +27,23 @@ mixin _$UpMessage {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UpMessageCopyWith<UpMessage> get copyWith =>
+  $ChatUpMessageCopyWith<ChatUpMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UpMessageCopyWith<$Res> {
-  factory $UpMessageCopyWith(UpMessage value, $Res Function(UpMessage) then) =
-      _$UpMessageCopyWithImpl<$Res, UpMessage>;
+abstract class $ChatUpMessageCopyWith<$Res> {
+  factory $ChatUpMessageCopyWith(
+          ChatUpMessage value, $Res Function(ChatUpMessage) then) =
+      _$ChatUpMessageCopyWithImpl<$Res, ChatUpMessage>;
   @useResult
   $Res call({SendMessageStatus status, String content, Role role});
 }
 
 /// @nodoc
-class _$UpMessageCopyWithImpl<$Res, $Val extends UpMessage>
-    implements $UpMessageCopyWith<$Res> {
-  _$UpMessageCopyWithImpl(this._value, this._then);
+class _$ChatUpMessageCopyWithImpl<$Res, $Val extends ChatUpMessage>
+    implements $ChatUpMessageCopyWith<$Res> {
+  _$ChatUpMessageCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -74,21 +75,22 @@ class _$UpMessageCopyWithImpl<$Res, $Val extends UpMessage>
 }
 
 /// @nodoc
-abstract class _$$_UpMessageCopyWith<$Res> implements $UpMessageCopyWith<$Res> {
-  factory _$$_UpMessageCopyWith(
-          _$_UpMessage value, $Res Function(_$_UpMessage) then) =
-      __$$_UpMessageCopyWithImpl<$Res>;
+abstract class _$$_ChatUpMessageCopyWith<$Res>
+    implements $ChatUpMessageCopyWith<$Res> {
+  factory _$$_ChatUpMessageCopyWith(
+          _$_ChatUpMessage value, $Res Function(_$_ChatUpMessage) then) =
+      __$$_ChatUpMessageCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({SendMessageStatus status, String content, Role role});
 }
 
 /// @nodoc
-class __$$_UpMessageCopyWithImpl<$Res>
-    extends _$UpMessageCopyWithImpl<$Res, _$_UpMessage>
-    implements _$$_UpMessageCopyWith<$Res> {
-  __$$_UpMessageCopyWithImpl(
-      _$_UpMessage _value, $Res Function(_$_UpMessage) _then)
+class __$$_ChatUpMessageCopyWithImpl<$Res>
+    extends _$ChatUpMessageCopyWithImpl<$Res, _$_ChatUpMessage>
+    implements _$$_ChatUpMessageCopyWith<$Res> {
+  __$$_ChatUpMessageCopyWithImpl(
+      _$_ChatUpMessage _value, $Res Function(_$_ChatUpMessage) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -98,7 +100,7 @@ class __$$_UpMessageCopyWithImpl<$Res>
     Object? content = null,
     Object? role = null,
   }) {
-    return _then(_$_UpMessage(
+    return _then(_$_ChatUpMessage(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -117,12 +119,12 @@ class __$$_UpMessageCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UpMessage implements _UpMessage {
-  _$_UpMessage(
+class _$_ChatUpMessage implements _ChatUpMessage {
+  _$_ChatUpMessage(
       {required this.status, required this.content, required this.role});
 
-  factory _$_UpMessage.fromJson(Map<String, dynamic> json) =>
-      _$$_UpMessageFromJson(json);
+  factory _$_ChatUpMessage.fromJson(Map<String, dynamic> json) =>
+      _$$_ChatUpMessageFromJson(json);
 
   @override
   SendMessageStatus status;
@@ -133,31 +135,31 @@ class _$_UpMessage implements _UpMessage {
 
   @override
   String toString() {
-    return 'UpMessage(status: $status, content: $content, role: $role)';
+    return 'ChatUpMessage(status: $status, content: $content, role: $role)';
   }
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpMessageCopyWith<_$_UpMessage> get copyWith =>
-      __$$_UpMessageCopyWithImpl<_$_UpMessage>(this, _$identity);
+  _$$_ChatUpMessageCopyWith<_$_ChatUpMessage> get copyWith =>
+      __$$_ChatUpMessageCopyWithImpl<_$_ChatUpMessage>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UpMessageToJson(
+    return _$$_ChatUpMessageToJson(
       this,
     );
   }
 }
 
-abstract class _UpMessage implements UpMessage {
-  factory _UpMessage(
+abstract class _ChatUpMessage implements ChatUpMessage {
+  factory _ChatUpMessage(
       {required SendMessageStatus status,
       required final String content,
-      required final Role role}) = _$_UpMessage;
+      required final Role role}) = _$_ChatUpMessage;
 
-  factory _UpMessage.fromJson(Map<String, dynamic> json) =
-      _$_UpMessage.fromJson;
+  factory _ChatUpMessage.fromJson(Map<String, dynamic> json) =
+      _$_ChatUpMessage.fromJson;
 
   @override
   SendMessageStatus get status;
@@ -168,6 +170,6 @@ abstract class _UpMessage implements UpMessage {
   Role get role;
   @override
   @JsonKey(ignore: true)
-  _$$_UpMessageCopyWith<_$_UpMessage> get copyWith =>
+  _$$_ChatUpMessageCopyWith<_$_ChatUpMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }

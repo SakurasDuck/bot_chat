@@ -33,6 +33,7 @@ dependencies:
   mmkv: ^1.2.16
   shared_preferences: ^2.1.0
   showcaseview: ^2.0.3
+  extended_image: ^7.0.2
   
 
 dev_dependencies:

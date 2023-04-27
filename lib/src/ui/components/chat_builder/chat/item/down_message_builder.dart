@@ -3,13 +3,13 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../models/chat_msg/down_message.dart';
+import '../../../../../models/chat_msg/chat_down_message.dart';
 import '../../../../widgets/markdow_code_builder.dart';
 
-class DownMessageContent extends StatelessWidget {
-  const DownMessageContent({required this.downMsg, super.key});
+class ChatDownMessageContent extends StatelessWidget {
+  const ChatDownMessageContent({required this.downMsg, super.key});
 
-  final DownMessage downMsg;
+  final ChatDownMessage downMsg;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,12 @@
-import 'package:chat_ui/src/provider/chat/chat/chat_instance.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../config/const.dart';
+import '../kv_store/kvstore.dart';
+import 'chat/chat/chat_instance.dart';
+import 'chat/common/chat_config.dart';
+import 'chat/image_gen/image_gen_instance.dart';
 
 part 'splash_load.g.dart';
 
@@ -9,7 +15,10 @@ Future<void> onLoad(OnLoadRef ref) async {
   GetIt.instance.registerLazySingletonAsync<bool>(() async {
     //加载缓存
     await Future.wait([
-      registerChatServices(ref),
+      // registerChatServices(ref),
+      registerImageGenServices(ref),
+      _getCacheOpenAIAPIKey(ref),
+      _getCacheProxy(ref),
       Future.delayed(const Duration(seconds: 1))
     ]);
 
@@ -27,3 +36,19 @@ Future<bool> get isInited async =>
     (await GetIt.instance.getAsync<bool>(instanceName: _instanceName));
 
 const String _instanceName = 'isInited';
+
+//从缓存加载OpenAIAPIKey
+Future<void> _getCacheOpenAIAPIKey(Ref ref) async {
+  final openAIAPIKey = await kvStore.getString(CACHED_OPENAI_API_KEY);
+  if (openAIAPIKey != null) {
+    ref.read(getOpenAPIKeyProvider.notifier).onChange(openAIAPIKey);
+  }
+}
+
+//从缓存加载代理地址
+Future<void> _getCacheProxy(Ref ref) async {
+  final proxy = await kvStore.getString(CACHED_PROXY_PATH);
+  if (proxy != null) {
+    ref.read(proxyConfigProvider.notifier).onChange(proxy);
+  }
+}

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../models/chat_msg/up_message.dart';
+import '../../../../../models/chat_msg/chat_up_message.dart';
 
-class UpMessageContent extends StatelessWidget {
-  const UpMessageContent({required this.upMsg, super.key});
+class ChatUpMessageContent extends StatelessWidget {
+  const ChatUpMessageContent({required this.upMsg, super.key});
 
-  final UpMessage upMsg;
+  final ChatUpMessage upMsg;
 
   @override
   Widget build(BuildContext context) {

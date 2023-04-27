@@ -7,8 +7,8 @@ import 'package:get_it/get_it.dart';
 import '../../../config/const.dart';
 import '../../../config/enums.dart';
 import '../../../kv_store/kvstore.dart';
-import '../../../models/chat_msg/down_message.dart';
-import '../../../models/chat_msg/up_message.dart';
+import '../../../models/chat_msg/chat_down_message.dart';
+import '../../../models/chat_msg/chat_up_message.dart';
 import '../../../models/message.dart';
 import '../../../services/chat_api.dart';
 import '../../../services/message.dart' hide Message;
@@ -21,37 +21,38 @@ import '../../../ui/components/chat_builder/chat/title.dart';
 import '../../../ui/widgets/common_appbar_builder.dart';
 import '../../portrait/portrait_list.dart';
 import '../chat_interface.dart';
-import '../common/chat_config.dart';
 import '../common/chat_state.dart';
 import 'chat_config.dart';
 
 class ChatActionsInstance
-    extends IChatActionProvider<UpMessage, DownMessage, String> {
+    extends IChatActionProvider<ChatUpMessage, ChatDownMessage, String> {
   @override
   void resetChat() {
     //_cacheMessage() 已经删除了缓存
   }
 
   @override
-  Future<List<Message<UpMessage, DownMessage>>> loadingHistoryMessage() async {
+  Future<List<Message<ChatUpMessage, ChatDownMessage>>>
+      loadingHistoryMessage() async {
     final cache = await kvStore.getString(CACHED_MSG_LIST);
     if (cache == null) {
       return [];
     } else {
-      final List<Message<UpMessage, DownMessage>> historyMsgs = (jsonDecode(
-              cache) as List<dynamic>)
-          .map<Message<UpMessage, DownMessage>>((e) => Message.fromJson(e, (t) {
-                if (t is Map<String, dynamic>) {
-                  return UpMessage.fromJson(t);
-                }
-                throw Exception('upMessage is not Map<String,dynamic>');
-              }, (k) {
-                if (k is Map<String, dynamic>) {
-                  return DownMessage.fromJson(k);
-                }
-                throw Exception('downMessage is not Map<String,dynamic>');
-              }))
-          .toList();
+      final List<Message<ChatUpMessage, ChatDownMessage>> historyMsgs =
+          (jsonDecode(cache) as List<dynamic>)
+              .map<Message<ChatUpMessage, ChatDownMessage>>((e) =>
+                  Message.fromJson(e, (t) {
+                    if (t is Map<String, dynamic>) {
+                      return ChatUpMessage.fromJson(t);
+                    }
+                    throw Exception('upMessage is not Map<String,dynamic>');
+                  }, (k) {
+                    if (k is Map<String, dynamic>) {
+                      return ChatDownMessage.fromJson(k);
+                    }
+                    throw Exception('downMessage is not Map<String,dynamic>');
+                  }))
+              .toList();
       return historyMsgs;
     }
   }
@@ -75,11 +76,11 @@ class ChatActionsInstance
         .map<ReqMessage>((e) {
       if (e.upMessage != null) {
         return ReqMessage(
-            content: (e.upMessage! as UpMessage).content,
+            content: (e.upMessage! as ChatUpMessage).content,
             role: Role.USER.toString());
       } else {
         return ReqMessage(
-            content: (e.downMessage! as DownMessage).content,
+            content: (e.downMessage! as ChatDownMessage).content,
             role: Role.ASSISTANT.toString());
       }
     }).toList());
@@ -103,7 +104,7 @@ class ChatActionsInstance
           msgId: value.id,
           createTime: now,
           updateTime: now,
-          downMessage: DownMessage(
+          downMessage: ChatDownMessage(
             content: value.choices.map((e) => e.message.content).fold(
                 '',
                 (previousValue, element) => previousValue.isEmpty
@@ -118,27 +119,27 @@ class ChatActionsInstance
   }
 
   @override
-  Message<UpMessage, DownMessage> convertUpMsg(
+  Message<ChatUpMessage, ChatDownMessage> convertUpMsg(
       {required String msgId, required int now, required String upContent}) {
     return Message(
         msgId: msgId,
         createTime: now,
         updateTime: now,
-        upMessage: UpMessage(
+        upMessage: ChatUpMessage(
             status: SendMessageStatus.SENDING,
             content: upContent.toString(),
             role: Role.USER));
   }
 
   //缓存消息
-  void _cacheMessage(List<Message<UpMessage, DownMessage>> msgs) {
+  void _cacheMessage(List<Message<ChatUpMessage, ChatDownMessage>> msgs) {
     if (msgs.isEmpty) {
       kvStore.remove(CACHED_MSG_LIST);
     } else {
       kvStore.setString(
           CACHED_MSG_LIST,
           jsonEncode(msgs, toEncodable: (o) {
-            if (o is Message<UpMessage, DownMessage>) {
+            if (o is Message<ChatUpMessage, ChatDownMessage>) {
               return o.toJson((t) => t.toJson(), (k) => k.toJson());
             } else {
               return jsonEncode(o);
@@ -150,12 +151,13 @@ class ChatActionsInstance
   @override
   bool updateShouldNotify(List<Message> previous, List<Message> next) {
     //在这里缓存消息(这是个败笔,调用过于频繁)
-    _cacheMessage(next.cast<Message<UpMessage, DownMessage>>());
+    _cacheMessage(next.cast<Message<ChatUpMessage, ChatDownMessage>>());
     return true;
   }
 }
 
-class ChatUIsInstance extends IChatUIProvider<UpMessage, DownMessage, String> {
+class ChatUIsInstance
+    extends IChatUIProvider<ChatUpMessage, ChatDownMessage, String> {
   @override
   List<Widget> buildDrawerMenus() {
     return <Widget>[
@@ -166,7 +168,7 @@ class ChatUIsInstance extends IChatUIProvider<UpMessage, DownMessage, String> {
 
   @override
   Widget buildDownMessageItem(downMsg) {
-    return DownMessageContent(
+    return ChatDownMessageContent(
       downMsg: downMsg,
     );
   }
@@ -182,7 +184,7 @@ class ChatUIsInstance extends IChatUIProvider<UpMessage, DownMessage, String> {
 
   @override
   Widget buildUpMessageItem(upMsg) {
-    return UpMessageContent(
+    return ChatUpMessageContent(
       upMsg: upMsg,
     );
   }
@@ -205,27 +207,9 @@ Future<void> registerChatServices(Ref ref) async {
   GetIt.instance
       .registerLazySingleton<IChatUIProvider>(() => ChatUIsInstance());
   await Future.wait([
-    _getCacheOpenAIAPIKey(ref),
-    _getCacheProxy(ref),
     _getCacheModel(ref),
     _getCachePortrait(ref),
   ]);
-}
-
-//从缓存加载OpenAIAPIKey
-Future<void> _getCacheOpenAIAPIKey(Ref ref) async {
-  final openAIAPIKey = await kvStore.getString(CACHED_OPENAI_API_KEY);
-  if (openAIAPIKey != null) {
-    ref.read(getOpenAPIKeyProvider.notifier).onChange(openAIAPIKey);
-  }
-}
-
-//从缓存加载代理地址
-Future<void> _getCacheProxy(Ref ref) async {
-  final proxy = await kvStore.getString(CACHED_PROXY_PATH);
-  if (proxy != null) {
-    ref.read(proxyConfigProvider.notifier).onChange(proxy);
-  }
 }
 
 //从缓存加载语言模型

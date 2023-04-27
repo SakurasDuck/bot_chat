@@ -15,7 +15,6 @@ import 'src/ui/theme.dart';
 
 void main() {
   runZonedGuarded(() {
-    final providerContainer = ProviderContainer();
     //同步错误
     FlutterError.onError = defaultError;
     HttpEnhancedClient.instance([
@@ -25,6 +24,7 @@ void main() {
     apisInstance();
     initKey();
     setPathUrlStrategy();
+    final providerContainer = ProviderContainer();
     registerGLobalPC(providerContainer);
     runApp(ProviderScope(
         child: UncontrolledProviderScope(
