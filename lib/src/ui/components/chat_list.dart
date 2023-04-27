@@ -19,7 +19,8 @@ class ChatList extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Consumer(
                     builder: (context, ref, child) {
-                      final chatStore = ref.watch(messageStoreProvider);
+                      final chatStore =
+                          ref.watch(messageStoreProvider).reversed.toList();
                       return GestureDetector(
                         onTap: () {
                           if (ref.read(getFocusNodeProvider).hasFocus) {
@@ -35,6 +36,10 @@ class ChatList extends StatelessWidget {
                                   ref.watch(getScrollerControllerProvider),
                               center: centerKey,
                               slivers: [
+                                SliverPadding(
+                                  padding: EdgeInsets.zero,
+                                  key: centerKey,
+                                ),
                                 SliverList(
                                     delegate: SliverChildBuilderDelegate(
                                         (context, index) {
@@ -45,10 +50,6 @@ class ChatList extends StatelessWidget {
                                     return renderLeftItem(msg);
                                   }
                                 }, childCount: chatStore.length)),
-                                SliverPadding(
-                                  padding: EdgeInsets.zero,
-                                  key: centerKey,
-                                ),
                               ],
                             ),
                             if (ref.watch(getShowMoreBtnProvider).show)

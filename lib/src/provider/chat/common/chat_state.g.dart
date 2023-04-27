@@ -92,7 +92,7 @@ final getScrollingProvider =
 );
 
 typedef _$GetScrolling = AutoDisposeNotifier<bool>;
-String _$messageStoreHash() => r'042daac347b517bb8d1d9a4ef0d05b95fed8cca5';
+String _$messageStoreHash() => r'91f994392f466a470bf5a42319b0805abf6c3b72';
 
 ///消息列表
 ///

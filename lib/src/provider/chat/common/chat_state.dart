@@ -1,4 +1,3 @@
-import 'package:chat_ui/src/provider/splash_load.dart';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -104,7 +103,7 @@ class ShowMoreBtn with _$ShowMoreBtn {
 
 ///消息列表
 @riverpod
-class MessageStore extends _$MessageStore {
+class MessageStore extends _$MessageStore with SendActionStruct, MessageUIs {
   late Cancel cancelListener;
 
   @override
@@ -132,13 +131,16 @@ class MessageStore extends _$MessageStore {
     });
     ref.onDispose(() {
       //销毁时关闭监听
+      cancelListener();
     });
     return <Message>[];
   }
 
   @override
   bool updateShouldNotify(List<Message> previous, List<Message> next) {
-    return true;
+    return GetIt.instance
+        .get<IChatActionProvider>()
+        .updateShouldNotify(previous, next);
   }
 
   //修改
@@ -147,13 +149,14 @@ class MessageStore extends _$MessageStore {
   }
 
   //发消息
-  Future<void> _sendMessage(String msg) async {
+  @override
+  Future<void> _sendMessage(dynamic messageContent) async {
     //创建本地消息
     final msgId = ref.read<Uuid>(getUuidProvider).v1();
     final now = DateTime.now().millisecondsSinceEpoch;
     final upMsg = GetIt.instance
         .get<IChatActionProvider>()
-        .convertUpMsg(upContent: msg, msgId: msgId, now: now);
+        .convertUpMsg(upContent: messageContent, msgId: msgId, now: now);
     //添加到消息列表,并刷新 UI
     _modify((state) => state..add(upMsg));
 
@@ -232,7 +235,9 @@ class MessageStore extends _$MessageStore {
     //重置聊天
     GetIt.instance.get<IChatActionProvider>().resetChat();
   }
+}
 
+mixin MessageUIs on SendActionStruct {
   ///构建上行消息内容
   Widget buildUpMsgContent(Message msg) {
     return GetIt.instance
@@ -253,4 +258,21 @@ class MessageStore extends _$MessageStore {
         .get<IChatUIProvider>()
         .buildMessageInput((msg) => _sendMessage(msg));
   }
+
+  ///构建Appbar
+  Widget buildChatView(
+      Widget drawerMenu, Widget chatView, Widget chatInputView) {
+    return GetIt.instance
+        .get<IChatUIProvider>()
+        .buildChatView(drawerMenu, chatView, chatInputView);
+  }
+
+  ///构建抽屉菜单
+  List<Widget> buildDrawerMenus() {
+    return GetIt.instance.get<IChatUIProvider>().buildDrawerMenus();
+  }
+}
+
+abstract class SendActionStruct {
+  Future<void> _sendMessage(dynamic messageContent);
 }

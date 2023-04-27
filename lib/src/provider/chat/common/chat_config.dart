@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../config/const.dart';
 import '../../../config/open_api_key/get_api_key.dart';
+import '../../../http_clinet/clinet.dart';
 import '../../../kv_store/kvstore.dart';
 
 part 'chat_config.g.dart';
@@ -29,5 +30,28 @@ class GetOpenAPIKey extends _$GetOpenAPIKey {
   void toCache() {
     //写缓存
     kvStore.setString(CACHED_OPENAI_API_KEY, state);
+  }
+}
+
+///设置代理
+@Riverpod(keepAlive: true)
+class ProxyConfig extends _$ProxyConfig {
+  @override
+  String build() => '';
+
+  //修改代理
+  void onChange(String proxy) {
+    state = proxy;
+    //重置代理
+    HttpEnhancedClient.resetProxy(proxy);
+  }
+
+  void toCache() {
+    //写缓存
+    if (state.isNotEmpty) {
+      kvStore.setString(CACHED_PROXY_PATH, state);
+    } else {
+      kvStore.remove(CACHED_PROXY_PATH);
+    }
   }
 }

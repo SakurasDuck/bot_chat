@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../config/const.dart';
@@ -13,15 +14,23 @@ import '../../../services/chat_api.dart';
 import '../../../services/message.dart' hide Message;
 import '../../../ui/components/chat_builder/chat/item/down_message_builder.dart';
 import '../../../ui/components/chat_builder/chat/item/up_message_builder.dart';
+import '../../../ui/components/chat_builder/chat/menus/model.dart';
+import '../../../ui/components/chat_builder/chat/menus/portrait.dart';
 import '../../../ui/components/chat_builder/chat/text_input_builder.dart';
+import '../../../ui/components/chat_builder/chat/title.dart';
+import '../../../ui/widgets/common_appbar_builder.dart';
+import '../../portrait/portrait_list.dart';
 import '../chat_interface.dart';
+import '../common/chat_config.dart';
 import '../common/chat_state.dart';
 import 'chat_config.dart';
 
 class ChatActionsInstance
     extends IChatActionProvider<UpMessage, DownMessage, String> {
   @override
-  void resetChat() {}
+  void resetChat() {
+    //_cacheMessage() 已经删除了缓存
+  }
 
   @override
   Future<List<Message<UpMessage, DownMessage>>> loadingHistoryMessage() async {
@@ -29,13 +38,20 @@ class ChatActionsInstance
     if (cache == null) {
       return [];
     } else {
-      final List<Message<UpMessage, DownMessage>> historyMsgs =
-          (jsonDecode(cache) as List<dynamic>)
-              .map<Message<UpMessage, DownMessage>>((e) => Message.fromJson(
-                  e,
-                  (e) => UpMessage.fromJson(e! as Map<String, dynamic>),
-                  (e) => DownMessage.fromJson(e! as Map<String, dynamic>)))
-              .toList();
+      final List<Message<UpMessage, DownMessage>> historyMsgs = (jsonDecode(
+              cache) as List<dynamic>)
+          .map<Message<UpMessage, DownMessage>>((e) => Message.fromJson(e, (t) {
+                if (t is Map<String, dynamic>) {
+                  return UpMessage.fromJson(t);
+                }
+                throw Exception('upMessage is not Map<String,dynamic>');
+              }, (k) {
+                if (k is Map<String, dynamic>) {
+                  return DownMessage.fromJson(k);
+                }
+                throw Exception('downMessage is not Map<String,dynamic>');
+              }))
+          .toList();
       return historyMsgs;
     }
   }
@@ -113,12 +129,39 @@ class ChatActionsInstance
             content: upContent.toString(),
             role: Role.USER));
   }
+
+  //缓存消息
+  void _cacheMessage(List<Message<UpMessage, DownMessage>> msgs) {
+    if (msgs.isEmpty) {
+      kvStore.remove(CACHED_MSG_LIST);
+    } else {
+      kvStore.setString(
+          CACHED_MSG_LIST,
+          jsonEncode(msgs, toEncodable: (o) {
+            if (o is Message<UpMessage, DownMessage>) {
+              return o.toJson((t) => t.toJson(), (k) => k.toJson());
+            } else {
+              return jsonEncode(o);
+            }
+          }));
+    }
+  }
+
+  @override
+  bool updateShouldNotify(List<Message> previous, List<Message> next) {
+    //在这里缓存消息(这是个败笔,调用过于频繁)
+    _cacheMessage(next.cast<Message<UpMessage, DownMessage>>());
+    return true;
+  }
 }
 
 class ChatUIsInstance extends IChatUIProvider<UpMessage, DownMessage, String> {
   @override
   List<Widget> buildDrawerMenus() {
-    return <Widget>[];
+    return <Widget>[
+      const ModelMenu(),
+      const PortraitMenu(),
+    ];
   }
 
   @override
@@ -143,11 +186,62 @@ class ChatUIsInstance extends IChatUIProvider<UpMessage, DownMessage, String> {
       upMsg: upMsg,
     );
   }
+
+  @override
+  Widget buildChatView(
+      Widget drawerMenu, Widget chatView, Widget chatInputView) {
+    return CommonChatViewBuilder(
+      title: const ChatTitle(),
+      drawerMenu: drawerMenu,
+      chatInputView: chatInputView,
+      chatView: chatView,
+    );
+  }
 }
 
-void init() {
+Future<void> registerChatServices(Ref ref) async {
   GetIt.instance
       .registerLazySingleton<IChatActionProvider>(() => ChatActionsInstance());
   GetIt.instance
       .registerLazySingleton<IChatUIProvider>(() => ChatUIsInstance());
+  await Future.wait([
+    _getCacheOpenAIAPIKey(ref),
+    _getCacheProxy(ref),
+    _getCacheModel(ref),
+    _getCachePortrait(ref),
+  ]);
+}
+
+//从缓存加载OpenAIAPIKey
+Future<void> _getCacheOpenAIAPIKey(Ref ref) async {
+  final openAIAPIKey = await kvStore.getString(CACHED_OPENAI_API_KEY);
+  if (openAIAPIKey != null) {
+    ref.read(getOpenAPIKeyProvider.notifier).onChange(openAIAPIKey);
+  }
+}
+
+//从缓存加载代理地址
+Future<void> _getCacheProxy(Ref ref) async {
+  final proxy = await kvStore.getString(CACHED_PROXY_PATH);
+  if (proxy != null) {
+    ref.read(proxyConfigProvider.notifier).onChange(proxy);
+  }
+}
+
+//从缓存加载语言模型
+Future<void> _getCacheModel(Ref ref) async {
+  final model = await kvStore.getString(CACHED_MODEL_NAME);
+  if (model != null) {
+    ref.read(chatModelProvider.notifier).onChange(model);
+  }
+}
+
+//从缓存加载画像
+Future<void> _getCachePortrait(Ref ref) async {
+  final portrait = await kvStore.getString(CACHED_BOT_PORTRAIT);
+  if (portrait != null) {
+    ref
+        .read(botPortraitProvider.notifier)
+        .onChange(Portrait.fromJson(jsonDecode(portrait)));
+  }
 }

@@ -4,6 +4,7 @@ import 'package:chat_ui/src/models/message.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/types.dart';
+import '../../ui/widgets/comon_drawer_inpput.dart';
 import 'common/chat_state.dart';
 
 ///聊天动作接口
@@ -33,11 +34,15 @@ abstract class IChatActionProvider<T extends UpMessageStatus, K, U> {
   }
 
   //消息监听
-  Cancel listenMessage(RecMessageCallback<Message<T,K>> callback) {
+  Cancel listenMessage(RecMessageCallback<Message<T, K>> callback) {
     return _messageStreamController.stream.listen((event) {
       callback(event);
     }).cancel;
   }
+
+  //判断是否需要触发更新
+  bool updateShouldNotify(
+      List<Message<T, K>> previous, List<Message<T, K>> next);
 }
 
 ///聊天UI接口
@@ -59,6 +64,10 @@ abstract class IChatUIProvider<T, K, U> {
 
   // 构建抽屉菜单UI
   List<Widget> buildDrawerMenus();
+
+  // 构建appbar UI
+  // [drawerMenu] 抽屉菜单child
+  Widget buildChatView(Widget drawerMenu, Widget chatView, Widget chatInputView);
 }
 
 typedef SendMessageFunc<T> = Future<void> Function(T msg);

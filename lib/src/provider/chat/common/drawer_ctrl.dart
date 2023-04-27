@@ -3,7 +3,7 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-import '../chat/chat_config.dart';
+import 'chat_config.dart';
 
 part 'drawer_ctrl.g.dart';
 
