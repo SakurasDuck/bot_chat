@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../provider/chat/chat/chat_config.dart';
 import '../../../../../provider/chat/common/chat_state.dart';
 import '../../../../../provider/chat/common/drawer_ctrl.dart';
+import '../../../../../routes/pages.dart';
 
 class ModelMenu extends StatelessWidget {
   const ModelMenu({super.key});
@@ -40,7 +41,7 @@ class ModelMenu extends StatelessWidget {
                                     TextButton(
                                         onPressed: () {
                                           cancel();
-                                          context.pushNamed('models');
+                                          context.push(Routes.CHAT_MODEL);
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
@@ -59,7 +60,7 @@ class ModelMenu extends StatelessWidget {
                                 ),
                               );
                             } else {
-                              context.pushNamed('models');
+                              context.push(Routes.CHAT_MODEL);
                             }
                           },
                           title: Text(

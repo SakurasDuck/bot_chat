@@ -17,6 +17,9 @@ class MMKVKVStore extends IKvStore {
   MMKV? _instance;
 
   Future<MMKV> get _mmkv async {
+    if (_instance != null) {
+      return _instance!;
+    }
     if (_lock.isUsing()) {
       await _lock.waitDone();
       return _instance!;

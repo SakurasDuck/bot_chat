@@ -6,8 +6,10 @@ import 'package:http/io_client.dart';
 import 'get_client_base.dart';
 
 BaseClient createClient(String? ioProxy) {
-  if (ioProxy == null) {
-    return IOClient();
+  if (ioProxy?.isNotEmpty != true) {
+    final HttpClient client = HttpClient();
+    client.findProxy = HttpClient.findProxyFromEnvironment;
+    return IOClient(client);
   }
   final client = HttpClient();
   //设置代理

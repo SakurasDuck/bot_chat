@@ -9,7 +9,7 @@ import 'src/config/api_execption.dart';
 import 'src/config/global_ref.dart';
 import 'src/config/open_api_key/get_api_key.dart';
 import 'src/http_clinet/clinet.dart';
-import 'src/routes/route.dart';
+import 'src/routes/pages.dart';
 import 'src/services/apis.dart';
 import 'src/ui/theme.dart';
 

@@ -10,7 +10,7 @@ Future<Response> checkStatusCodeProgram(Future<Response> Function() callback,
     Map<String, String>? headers, HttpType? type) async {
   final Response response = await callback();
   if (response.statusCode == 401) {
-    final keyProvider = globalPC.read(getOpenAPIKeyProvider.notifier);
+    final keyProvider = globalRef.read(getOpenAPIKeyProvider.notifier);
     keyProvider.onChange('');
     keyProvider.toCache();
     throw ApiException.withInner(

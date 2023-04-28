@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 
-import '../config/open_api_key/get_api_key.dart';
+import '../provider/chat/common/chat_config.dart';
 
 part 'image_gen_api.freezed.dart';
 part 'image_gen_api.g.dart';
@@ -21,7 +21,7 @@ class ImageGenAPI {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer ${GetIt.instance.get<GetAPIKey>().call()}'
+          'Authorization': 'Bearer ${GetOpenAPIKey.openAIAPIKey}'
         },
         body: jsonEncode(req));
     if (response.statusCode == 200) {

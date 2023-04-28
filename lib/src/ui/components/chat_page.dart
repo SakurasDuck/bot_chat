@@ -22,6 +22,7 @@ class ChatView extends StatelessWidget {
             builder: (context) => Consumer(
                   builder: (context, ref, child) {
                     return SliderDrawer(
+                        sliderOpenSize: MediaQuery.of(context).size.width*0.6,
                         key: ref.watch(drawerCtrlKeyProvider),
                         appBar: null,
                         slider: const MyDrawer(),

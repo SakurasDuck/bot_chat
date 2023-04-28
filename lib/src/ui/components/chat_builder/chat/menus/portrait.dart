@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../provider/chat/chat/chat_config.dart';
 import '../../../../../provider/chat/common/chat_state.dart';
+import '../../../../../routes/pages.dart';
 
 class PortraitMenu extends StatelessWidget {
   const PortraitMenu({super.key});
@@ -28,7 +29,7 @@ class PortraitMenu extends StatelessWidget {
                         TextButton(
                             onPressed: () {
                               cancel();
-                              context.pushNamed('portraits');
+                              context.push(Routes.PORTRAITS);
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
@@ -45,7 +46,7 @@ class PortraitMenu extends StatelessWidget {
                     ),
                   );
                 } else {
-                  context.pushNamed('portraits');
+                  context.push(Routes.PORTRAITS);
                 }
               },
               leading: const Icon(

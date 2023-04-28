@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../routes/pages.dart';
+
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
 
@@ -27,10 +29,13 @@ class SplashView extends StatelessWidget {
                 final future = ref.watch(onLoadProvider);
                 return future.when(
                   loading: () => const CircularProgressIndicator(),
-                  error: (err, stack) => Text('load: $err'),
+                  error: (err, stack) {
+                    debugPrint(err.toString());
+                    return Text('load: $err');
+                  },
                   data: (_) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      context.replaceNamed('chat');
+                      context.go(Routes.CHAT);
                     });
                     return const CircularProgressIndicator();
                   },

@@ -58,7 +58,7 @@ class SharedPreferencesKvstore extends IKvStore {
 
   @override
   Future<bool> getBool(String key, {bool defaultValue = false}) async {
-    if (await containsKey(_getCacheKey(key)) != true) return defaultValue;
+    if (await containsKey(key) != true) return defaultValue;
     final bool value = (await _prefs).getBool(_getCacheKey(key))!;
     debugPrint('getBool $key $value');
     return value;
@@ -72,7 +72,7 @@ class SharedPreferencesKvstore extends IKvStore {
 
   @override
   Future<int?> getInt(String key, {int? defaultValue}) async {
-    if (await containsKey(_getCacheKey(key)) != true) return defaultValue;
+    if (await containsKey(key) != true) return defaultValue;
     final int value = (await _prefs).getInt(
       _getCacheKey(key),
     )!;
@@ -88,7 +88,7 @@ class SharedPreferencesKvstore extends IKvStore {
 
   @override
   Future<double?> getDouble(String key, {double? defaultValue}) async {
-    if (await containsKey(_getCacheKey(key)) != true) return defaultValue;
+    if (await containsKey(key) != true) return defaultValue;
     final double value = (await _prefs).getDouble(_getCacheKey(key))!;
     debugPrint('getDouble $key $value');
     return value;

@@ -9,31 +9,28 @@ import '../ui/components/chat_portraits.dart';
 import '../ui/components/models_list.dart';
 import '../ui/components/splash.dart';
 
+part 'routes.dart';
+
 final router = GoRouter(
     routes: [
       GoRoute(
-        name: 'splash',
-        path: '/',
+        path: _Path.splash,
         builder: (context, state) => const SplashView(),
       ),
       GoRoute(
-          name: 'chat',
-          path: '/chat',
+          path: _Path.chat,
           builder: (context, state) => const ChatView(),
           routes: [
             GoRoute(
-              name: 'models',
-              path: 'models',
+              path: _Path.models,
               builder: (context, state) => const ModelsList(),
             ),
             GoRoute(
-                name: 'portraits',
-                path: 'portraits',
+                path: _Path.portraits,
                 builder: (context, state) => const ChatPortraits(),
                 routes: [
                   GoRoute(
-                    name: 'add_portrait',
-                    path: 'add_portrait',
+                    path: _Path.addPortrait,
                     builder: (context, state) => const AddPortrait(),
                   ),
                 ])

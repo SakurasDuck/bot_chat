@@ -6,6 +6,20 @@ part of 'chat_config.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$modeConfigHash() => r'bfb60e3ba21a8643a394efe5437ae04109ea2cca';
+
+/// See also [ModeConfig].
+@ProviderFor(ModeConfig)
+final modeConfigProvider = NotifierProvider<ModeConfig, ChatMode>.internal(
+  ModeConfig.new,
+  name: r'modeConfigProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$modeConfigHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ModeConfig = Notifier<ChatMode>;
 String _$getOpenAPIKeyHash() => r'4e3c7f69e53181f36917339b1d58cbee47ae8fa7';
 
 /// See also [GetOpenAPIKey].

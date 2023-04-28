@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../models/image_gen/image_gen_down_message.dart';
 
@@ -12,10 +13,10 @@ class ImageGenDownMessageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
+    return Consumer(builder: (context, ref, child) {
       ImageProvider? image;
       if (downMsg.url?.isNotEmpty == true) {
-        image = NetworkImage(downMsg.url!);
+        image = ExtendedNetworkImageProvider(downMsg.url!, cache: true);
       }
       if (downMsg.base64?.isNotEmpty == true) {
         image = MemoryImage(base64Decode(downMsg.base64!));
@@ -44,6 +45,10 @@ class ImageGenDownMessageContent extends StatelessWidget {
         return ExtendedImage(
           image: image,
           fit: BoxFit.fitWidth,
+          enableLoadState: true,
+          mode: ExtendedImageMode.gesture,
+          initGestureConfigHandler: (state) =>
+              GestureConfig(inPageView: true, cacheGesture: false),
         );
       }
     });

@@ -12,10 +12,7 @@ import '../../../models/image_gen/image_gen_down_message.dart';
 import '../../../models/image_gen/image_gen_up_message.dart';
 import '../../../models/message.dart';
 import '../../../services/image_gen_api.dart';
-import '../../../ui/components/chat_builder/chat/menus/model.dart';
-import '../../../ui/components/chat_builder/chat/menus/portrait.dart';
 import '../../../ui/components/chat_builder/chat/text_input_builder.dart';
-import '../../../ui/components/chat_builder/chat/title.dart';
 import '../../../ui/components/chat_builder/image_gen/item/down_message_builder.dart';
 import '../../../ui/components/chat_builder/image_gen/item/up_message_builder.dart';
 import '../../../ui/components/chat_builder/image_gen/title.dart';
@@ -33,7 +30,7 @@ class ImageGenActionsInstance extends IChatActionProvider<ImageGenUpMessage,
   @override
   Future<List<Message<ImageGenUpMessage, ImageGenDownMessage>>>
       loadingHistoryMessage() async {
-    final cache = await kvStore.getString(CACHED_MSG_LIST);
+    final cache = await kvStore.getString(CACHED_IMAGE_GEN_MSG_LIST);
     if (cache == null) {
       return [];
     } else {
@@ -101,10 +98,10 @@ class ImageGenActionsInstance extends IChatActionProvider<ImageGenUpMessage,
   void _cacheMessage(
       List<Message<ImageGenUpMessage, ImageGenDownMessage>> msgs) {
     if (msgs.isEmpty) {
-      kvStore.remove(CACHED_MSG_LIST);
+      kvStore.remove(CACHED_IMAGE_GEN_MSG_LIST);
     } else {
       kvStore.setString(
-          CACHED_MSG_LIST,
+          CACHED_IMAGE_GEN_MSG_LIST,
           jsonEncode(msgs, toEncodable: (o) {
             if (o is Message<ImageGenUpMessage, ImageGenDownMessage>) {
               return o.toJson((t) => t.toJson(), (k) => k.toJson());

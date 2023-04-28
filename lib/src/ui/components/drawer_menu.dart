@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../widgets/chat_mode_menu.dart';
 import '../widgets/proxy_menu.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -24,6 +25,7 @@ class MyDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  const ChatModeMenu(),
                   ...ref.read(messageStoreProvider.notifier).buildDrawerMenus(),
                   if (!kIsWeb) const ProxyMenu(),
                   const OPENAIKeyMenu(),

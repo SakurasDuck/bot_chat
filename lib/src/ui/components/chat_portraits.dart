@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../provider/chat/chat/chat_config.dart';
 import '../../provider/chat/chat/chat_state.dart';
 import '../../provider/portrait/portrait_list.dart';
+import '../../routes/pages.dart';
 import '../widgets/portrait_msgs.dart';
 
 class ChatPortraits extends StatelessWidget {
@@ -93,7 +94,7 @@ class ChatPortraits extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.goNamed('add_portrait');
+          context.push(Routes.ADD_PORTRAIT);
         },
         tooltip: '添加画像',
         backgroundColor: const Color(0xFF075E54),

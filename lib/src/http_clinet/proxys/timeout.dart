@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 import 'base_proxy.dart';
 
-const Duration _timeout = Duration(seconds: 100);
+const Duration _timeout = Duration(seconds: 60);
 
 Future<Response> timeoutProxyProgram(Future<Response> Function() callback,
     Map<String, String>? headers, HttpType? type) async {

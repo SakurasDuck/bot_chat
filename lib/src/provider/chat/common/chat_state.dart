@@ -10,6 +10,7 @@ import '../../../models/message.dart';
 import '../chat_interface.dart';
 
 part 'chat_state.g.dart';
+
 part 'chat_state.freezed.dart';
 
 ///uuid
@@ -220,7 +221,9 @@ class MessageStore extends _$MessageStore with SendActionStruct, MessageUIs {
         await GetIt.instance.get<IChatActionProvider>().loadingHistoryMessage();
     //添加到消息列表,并刷新 UI
     if (historyMsgs.isNotEmpty) {
-      _modify((state) => state..insertAll(0, historyMsgs));
+      _modify((state) => state
+        ..clear()
+        ..addAll(historyMsgs));
       //在渲染完成之后滚动到底部
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         ref.read(getScrollerControllerProvider.notifier).scroll2Last();

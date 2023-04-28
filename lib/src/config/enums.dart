@@ -38,3 +38,19 @@ enum PortraitSource implements Comparable<int> {
 
 //发送状态
 enum SendMessageStatus { SENDING, SENT, ERROR }
+
+///对话模式
+enum ChatMode with Comparable<String> {
+  CHAT('问答'),
+  IMAGE_GEN('画图'),
+  //speech to text
+  ASR('语音转文字');
+
+  const ChatMode(this.value);
+  final String value;
+  @override
+  String toString() => value;
+
+  @override
+  int compareTo(String other) => value.compareTo(other);
+}
