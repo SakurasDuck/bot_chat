@@ -6,7 +6,7 @@ part of 'chat_config.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$modeConfigHash() => r'bfb60e3ba21a8643a394efe5437ae04109ea2cca';
+String _$modeConfigHash() => r'ba98792509afb308568812494174a793ceb1c3f0';
 
 /// See also [ModeConfig].
 @ProviderFor(ModeConfig)
@@ -20,7 +20,7 @@ final modeConfigProvider = NotifierProvider<ModeConfig, ChatMode>.internal(
 );
 
 typedef _$ModeConfig = Notifier<ChatMode>;
-String _$getOpenAPIKeyHash() => r'4e3c7f69e53181f36917339b1d58cbee47ae8fa7';
+String _$getOpenAPIKeyHash() => r'4057171e0c4b16d7c4c863f64dbc784083a82a96';
 
 /// See also [GetOpenAPIKey].
 @ProviderFor(GetOpenAPIKey)

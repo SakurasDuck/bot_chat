@@ -4,13 +4,17 @@ import '../config/const.dart';
 import 'ai_model_api.dart';
 import 'chat_api.dart';
 import 'image_gen_api.dart';
+import 'speech_2_text_api.dart';
 
 export 'ai_model_api.dart';
 export 'model.dart';
 
 void apisInstance() {
-  GetIt.instance.registerLazySingleton<AiModelAPI>(() => const AiModelAPI(BASE_HOST));
+  GetIt.instance
+      .registerLazySingleton<AiModelAPI>(() => const AiModelAPI(BASE_HOST));
   GetIt.instance.registerLazySingleton<ChatAPI>(() => const ChatAPI(BASE_HOST));
-  GetIt.instance.registerLazySingleton<ImageGenAPI>(() => const ImageGenAPI(BASE_HOST));
+  GetIt.instance
+      .registerLazySingleton<ImageGenAPI>(() => const ImageGenAPI(BASE_HOST));
+  GetIt.instance.registerLazySingleton<Speech2TextApi>(
+      () => const Speech2TextApi(BASE_HOST));
 }
-
