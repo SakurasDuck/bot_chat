@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,15 @@ import 'src/config/api_execption.dart';
 import 'src/config/global_ref.dart';
 import 'src/config/open_api_key/get_api_key.dart';
 import 'src/http_clinet/clinet.dart';
+import 'src/http_clinet/http_overrides.dart';
 import 'src/routes/pages.dart';
 import 'src/services/apis.dart';
 import 'src/ui/theme.dart';
 
 void main() {
   runZonedGuarded(() {
+    //设置系统代理
+    HttpOverrides.global = MyHttpOverrides();
     //同步错误
     FlutterError.onError = defaultError;
     HttpEnhancedClient.instance([
