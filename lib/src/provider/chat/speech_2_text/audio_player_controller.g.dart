@@ -7,9 +7,11 @@ part of 'audio_player_controller.dart';
 // **************************************************************************
 
 String _$audioPlayerControllerHash() =>
-    r'df28a3473c638ee99ac36df322b687e2f8b898d2';
+    r'd6f6b022e14bb76b2a06c9e41ea09f307649c250';
 
-/// See also [AudioPlayerController].
+///语音播放控制器(主要作用协调同时只能播放一个语音)
+///
+/// Copied from [AudioPlayerController].
 @ProviderFor(AudioPlayerController)
 final audioPlayerControllerProvider = AutoDisposeNotifierProvider<
     AudioPlayerController, ListAudioPlayer>.internal(

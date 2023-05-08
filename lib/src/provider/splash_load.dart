@@ -9,6 +9,7 @@ import 'chat/chat/chat_instance.dart';
 import 'chat/chat_interface.dart';
 import 'chat/common/chat_config.dart';
 import 'chat/image_gen/image_gen_instance.dart';
+import 'chat/speech_2_text/speech_2_text_instance.dart';
 
 part 'splash_load.g.dart';
 
@@ -75,6 +76,7 @@ Future<void> _registerChatServices(Ref ref) async {
       await registerImageGenServices(ref);
       break;
     case ChatMode.ASR:
+        await registerSpeech2TextServices(ref);
       break;
     default:
       throw Exception('未知的聊天模式');

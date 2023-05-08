@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,11 +16,12 @@ import '../../../ui/components/chat_builder/speech_2_text/item/down_message_buil
 import '../../../ui/components/chat_builder/speech_2_text/item/up_msg_budiler.dart';
 import '../../../ui/components/chat_builder/speech_2_text/title.dart';
 import '../../../ui/components/chat_builder/speech_2_text/voice_input.dart';
+import '../../../ui/components/chat_builder/speech_2_text/wrap/chat_view_stack.dart';
 import '../../../ui/widgets/common_appbar_builder.dart';
 import '../chat_interface.dart';
 import '../common/chat_state.dart';
 
-class ImageGenActionsInstance
+class Speech2TextActionsInstance
     extends IChatActionProvider<AudioUpMessage, TextDownMessage, AudioModel> {
   @override
   void resetChat() {
@@ -95,10 +97,10 @@ class ImageGenActionsInstance
   //缓存消息
   void _cacheMessage(List<Message<AudioUpMessage, TextDownMessage>> msgs) {
     if (msgs.isEmpty) {
-      kvStore.remove(CACHED_IMAGE_GEN_MSG_LIST);
+      kvStore.remove(CACHED_SPEECH_2_TEXT_MSG_LIST);
     } else {
       kvStore.setString(
-          CACHED_IMAGE_GEN_MSG_LIST,
+          CACHED_SPEECH_2_TEXT_MSG_LIST,
           jsonEncode(msgs, toEncodable: (o) {
             if (o is Message<AudioUpMessage, TextDownMessage>) {
               return o.toJson((t) => t.toJson(), (k) => k.toJson());
@@ -117,8 +119,7 @@ class ImageGenActionsInstance
   }
 }
 
-
-class ImageGenUIsInstance
+class Speech2TextUIsInstance
     extends IChatUIProvider<AudioUpMessage, TextDownMessage, AudioModel> {
   @override
   List<Widget> buildDrawerMenus() {
@@ -135,8 +136,8 @@ class ImageGenUIsInstance
   @override
   Widget buildMessageInput(SendMessageFunc<AudioModel> sendMessage) {
     return VoiceMsgInput(
-      sendVoiceMsg: (String path,int duration) {
-        sendMessage(AudioModel(audioPath: path,audioLength: Duration(seconds: duration)));
+      sendVoiceMsg: (String path, Duration duration) {
+        sendMessage(AudioModel(audioPath: path, audioLength: duration));
       },
     );
   }
@@ -151,11 +152,21 @@ class ImageGenUIsInstance
   @override
   Widget buildChatView(
       Widget drawerMenu, Widget chatView, Widget chatInputView) {
-    return CommonChatViewBuilder(
-      title: const Speech2TextTitle(),
-      drawerMenu: drawerMenu,
-      chatInputView: chatInputView,
-      chatView: chatView,
+    return RecordingWrap(
+      child: CommonChatViewBuilder(
+        title: const Speech2TextTitle(),
+        drawerMenu: drawerMenu,
+        chatInputView: chatInputView,
+        chatView: chatView,
+      ),
     );
   }
+}
+
+Future<void> registerSpeech2TextServices(Ref ref) async {
+  GetIt.instance.registerLazySingleton<IChatActionProvider>(
+      () => Speech2TextActionsInstance());
+  GetIt.instance
+      .registerLazySingleton<IChatUIProvider>(() => Speech2TextUIsInstance());
+  await Future.wait([]);
 }

@@ -9,6 +9,9 @@ class VoiceUpMsgBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Text(
+          'path: ${upMsg.audioPath},length: ${upMsg.audioLength.inSeconds}'),
+    );
   }
 }

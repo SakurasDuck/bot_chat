@@ -24,17 +24,13 @@ class Speech2TextApi {
           'Accept': 'application/json',
           'Authorization': 'Bearer ${GetOpenAPIKey.openAIAPIKey}'
         },
-        body: Speech2TextReqBody(
+        body: jsonEncode(Speech2TextReqBody(
           model: 'whisper-1',
           file: audioPath,
           prompt: 'simplified Chinese',
-        ));
-    if (response.statusCode == 200) {
-      return Speech2TextRes.fromJson(
-          jsonDecode(const Utf8Decoder().convert(response.bodyBytes)));
-    } else {
-      throw Exception('Failed to load models');
-    }
+        )));
+    return Speech2TextRes.fromJson(
+        jsonDecode(const Utf8Decoder().convert(response.bodyBytes)));
   }
 }
 

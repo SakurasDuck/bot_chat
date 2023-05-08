@@ -1,76 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-typedef SendVoiceMsg = void Function(String path, int duration);
+import '../../../../config/types.dart';
+import '../../../../provider/chat/speech_2_text/get_audio_msg_controller.dart';
 
 class VoiceMsgInput extends StatelessWidget {
-  const VoiceMsgInput({super.key,required this.sendVoiceMsg});
+  const VoiceMsgInput({super.key, required this.sendVoiceMsg});
 
   final SendVoiceMsg sendVoiceMsg;
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => GestureDetector(
+    return Consumer(
+      builder: (context, ref, child) => GestureDetector(
         onLongPressStart: (details) async {
-          if (chatState.waitStart != null) {
+          final state = ref.read(audioMsgControllerProvider);
+          final provider = ref.read(audioMsgControllerProvider.notifier);
+          if (state.waitStart != null) {
             return;
           }
-          chatState.waitStart = startRecordVoice();
-          final result = await chatState.waitStart!;
+          state.waitStart = provider.startRecordVoice();
+          final result = await state.waitStart!;
           if (result == true) {
-            chatState.isSendingVoice = true;
-            chatState.markNeedUpdate();
+            provider.modify((state) => state..isSendingVoice = true);
           }
         },
         onLongPressMoveUpdate: (details) {
-          if (!chatState.isSendingVoice) {
+          final state = ref.read(audioMsgControllerProvider);
+          final provider = ref.read(audioMsgControllerProvider.notifier);
+          if (!state.isSendingVoice) {
             return;
           }
           if (details.localOffsetFromOrigin.dy < -115) {
-            chatState.isCancelSendVoice = true;
-            chatState.markNeedUpdate();
+            provider.modify((state) => state..isCancelSendVoice = true);
           } else {
-            if (chatState.isCancelSendVoice) {
-              chatState.isCancelSendVoice = false;
-              chatState.markNeedUpdate();
+            if (state.isCancelSendVoice) {
+              provider.modify((state) => state..isCancelSendVoice = false);
             }
           }
         },
         onLongPressEnd: (details) async {
-          if (chatState.hasWaiter) {
+          final state = ref.read(audioMsgControllerProvider);
+          final provider = ref.read(audioMsgControllerProvider.notifier);
+          if (state.hasWaiter) {
             return;
           }
-          chatState.hasWaiter = true;
+          state.hasWaiter = true;
 
           try {
-            final result = await chatState.waitStart!;
+            final result = await state.waitStart!;
             if (result == true) {
-              await chatState.stopAndHandleAudioRecordResult();
+              await provider.stopAndHandleAudioRecordResult(sendVoiceMsg);
             }
           } finally {
-            chatState.waitStart = null;
-
-            chatState.hasWaiter = false;
+            provider.modify((state) {
+              state.waitStart = null;
+              state.hasWaiter = false;
+              return state;
+            });
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-              color: chatState.isSendingVoice
-                  ? const Color(0xccffffff)
-                  : const Color(0xccd7d5d8),
-              borderRadius: BorderRadius.circular(22)),
-          margin: const EdgeInsets.only(bottom: 25, top: 25),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 100, minHeight: 100),
-            child: Container(
-              alignment: Alignment.center,
-              child: const Text(
-                '按住 说话',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xff565656),
-                  fontSize: 43,
-                  height: 1.0,
+        child: Consumer(
+          builder: (context, ref, child) => Container(
+            decoration: BoxDecoration(
+                color: ref.watch(audioMsgControllerProvider).isSendingVoice
+                    ? const Color(0xccffffff)
+                    : const Color(0xccd7d5d8),
+                borderRadius: BorderRadius.circular(22)),
+            margin: const EdgeInsets.only(bottom: 25, top: 25),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 100, minHeight: 100),
+              child: Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  '按住 说话',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xff565656),
+                    fontSize: 43,
+                    height: 1.0,
+                  ),
                 ),
               ),
             ),
@@ -79,12 +88,4 @@ class VoiceMsgInput extends StatelessWidget {
       ),
     );
   }
-
-    //发送语音
-  Future<bool> startRecordVoice() async {
-    final File file = await FileUtil.generateRandomTempFile(
-        path: '/chat/audio/', fileType: 'm4a');
-    return chatState.audioRecord!.start(path: file.path);
-  }
-
 }
