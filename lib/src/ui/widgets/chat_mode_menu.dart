@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,6 +22,9 @@ class ChatModeMenu extends StatelessWidget {
               ),
               title: PopupMenuButton<ChatMode>(
                 itemBuilder: (BuildContext context) => ChatMode.values
+                    .where((e) =>
+                        e == ChatMode.ASR &&
+                        !kIsWeb) //web does not support ASR(record  not supported well by web )
                     .map((e) => PopupMenuItem(
                           value: e,
                           child: Text(e.value),

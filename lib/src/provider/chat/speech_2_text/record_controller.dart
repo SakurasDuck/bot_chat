@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -50,13 +51,13 @@ class RecordController extends _$RecordController {
     state = modify(state);
   }
 
-  Future<bool> startRecord(String path) async {
+  Future<bool> startRecord() async {
     try {
       cancelFunc =
           Timer.periodic(const Duration(milliseconds: 100), (timer) async {
         state.durationByMilliSecond += 100;
       }).cancel;
-      await state.record.start(path: path);
+      await state.record.start();
       return true;
     } catch (e) {
       debugPrint('startRecord error:$e');
@@ -64,12 +65,18 @@ class RecordController extends _$RecordController {
     }
   }
 
-  Future<void> stopRecord() async {
+  Future<String> stopRecord() async {
     try {
-      await state.record.stop();
+      final result = await state.record.stop();
       cancelFunc?.call();
+      if (result != null) {
+        return result;
+      } else {
+        throw Exception('录音失败');
+      }
     } catch (e) {
       debugPrint('stopRecord error:$e');
+      rethrow;
     }
   }
 }

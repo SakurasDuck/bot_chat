@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:darq/darq.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
@@ -18,19 +20,28 @@ class Speech2TextApi {
 
   Future<Speech2TextRes> getSpeech2Text(String audioPath) async {
     final client = GetIt.instance.get<Client>();
-    final response = await client.post(Uri.parse('$host$_path'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ${GetOpenAPIKey.openAIAPIKey}'
-        },
-        body: jsonEncode(Speech2TextReqBody(
-          model: 'whisper-1',
-          file: audioPath,
-          prompt: 'simplified Chinese',
-        )));
+    final file1 = File(audioPath);
+    final file = await MultipartFile.fromPath('file', file1.path);
+    final request = MultipartRequest('POST', Uri.parse('$host$_path'));
+    request.files.add(file);
+    request.headers.addAll({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${GetOpenAPIKey.openAIAPIKey}'
+    });
+    request.fields.addAll(Speech2TextReqBody(
+      model: 'whisper-1',
+      file: audioPath,
+      prompt: 'simplified Chinese',
+    )
+        .toJson()
+        .entries
+        .where((element) => element.value != null)
+        .toMap((element) => MapEntry(element.key, element.value.toString())));
+    final response = await client.send(request);
+
     return Speech2TextRes.fromJson(
-        jsonDecode(const Utf8Decoder().convert(response.bodyBytes)));
+        jsonDecode(await response.stream.transform(utf8.decoder).first));
   }
 }
 

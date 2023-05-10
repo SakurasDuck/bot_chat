@@ -50,11 +50,11 @@ class TempFileUtil {
       if (fileType == null) {
         file = File(
             Uri.file('${tempDir.path}$path${Random().nextInt(4294967000)}')
-                .path);
+                .toFilePath());
       } else {
         file = File(Uri.file(
                 '${tempDir.path}$path${Random().nextInt(4294967000)}.$fileType')
-            .path);
+            .toFilePath());
       }
 
       if (!file.existsSync()) {
@@ -90,10 +90,11 @@ class TempFileUtil {
     File file;
     for (;;) {
       if (fileType == null) {
-        file = File(Uri.file('$path${Random().nextInt(4294967000)}').path);
+        file =
+            File(Uri.file('$path${Random().nextInt(4294967000)}').toFilePath());
       } else {
-        file = File(
-            Uri.file('$path${Random().nextInt(4294967000)}.$fileType').path);
+        file = File(Uri.file('$path${Random().nextInt(4294967000)}.$fileType')
+            .toFilePath());
       }
       if (!file.existsSync()) {
         return file.path;
